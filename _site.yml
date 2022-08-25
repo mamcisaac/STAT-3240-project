@@ -1,0 +1,21 @@
+name: STAT 1910 labs
+output_dir: docs
+# The website theme was chosen from
+# https://rmarkdown.rstudio.com/html_document_format#appearance_and_style
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+    toc_depth: 2
+    theme: cosmo
+    highlight: tango
+    df_print: paged
+    lib_dir: site_libs
+    self_contained: no
+# All icons were obtained from https://fontawesome.com/icons?d=gallery
+navbar:
+  title: STAT 1910
+  left:
+  - text: Term Project
+    href: term_project.html
+ 
