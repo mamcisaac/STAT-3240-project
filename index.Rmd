@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 library(knitr)
 
 # Don't repeat yourself!
-hint_1 <- "This is the phase of the project that is the least straightforward. Thus, we recommend you start early and get help during office hours early and often."
+hint_1 <- "This is the phase of the project that is the least straightforward. Thus, we recommend you start early and get help during office hours and via Piazza early and often."
 hint_2 <- "This phase may require revisions to your original choice of data and visits to office hours or the help center for help with data wrangling."
 only_group_leader <- "Only one group member will make a single submission on behalf of the whole group. They will submit:"
 submission_will_differ <- "(Note that your data proposal will likely differ slightly from this one)"
@@ -47,22 +47,25 @@ include_graphics("static/images/data_science_pipeline.png")
 In order to break down the task and minimize end-of-semester stress, you'll be working on the project in five phases:
 
 1. **Project groups:** Form groups.
-1. **Project data:** Propose a data set for your project. `r hint_1`
-1. **Project proposal:** Ensure you can work with your data in R by performing an exploratory data analysis. `r hint_2`
-1. **Initial project submission:** Make an initial submission of your project. You will skip some of the sections for now and only complete them after we have covered inference for regression in class. After you submit your work, you will get peer and instructor feedback.
+1. **Project data:** Propose a data set for your project. `r hint_1`. After you submit your data proposal, you will get peer and instructor feedback that you should incorporate in your project proposal.  1. **Project proposal:** Ensure you can work with your data in R by performing an exploratory data analysis. `r hint_2` After you submit your project prosal, you will get peer and instructor feedback that you should incorporate in your initial project submission. 
+1. **Initial project submission:** Make an initial submission of your project. You will skip some of the sections for now and only complete them after we have covered inference for regression in class. After you submit your work, you will get peer and instructor feedback that you should incorporate in your final report. 
 1. **Final project submission:** Incorporate your feedback from the intial project submission phase, complete the remaining sections, and resubmit your project. The majority of your grade will come from this final project submission.
+
+After phases 2,3, and 4, you will engage in **Peer review** and provide feedback to several other groups. Your group will be expected to incorporate the feedback it receives when working on the next phase of the project. 
+
+<!-- This term project instructions and samples are modified from [ModernDive Labs](https://moderndive.com). -->
 
 ***
 
-This term project instructions and samples are modified from ModernDive Labs.
 
 
 # Project Groups {#groups}
 
-1. You will work in the same group that you work with in class. 
-    + Complete the Team Formation Survey. The groups will be selected to balance characteristics across groups. 
+1. Complete the Team Formation Survey. 
+    + The groups will be selected to balance characteristics across groups. 
+    + Students who do not complete the survey by the deadline will be placed in groups together, so that more engaged students are less likely to be saddled with group members who cannot meet deadlines.
+    + You will work in this same group for in-class activities (*Team-based learning*).
     + All groups members are expected to contribute and you will all be held accountable for your contributions in peer evaluations.
-1. Choose a group name. 
 1. Assign a "team/group leader" who will have a few extra administrative duties at each phase. Ex: making submissions, filling out Google Forms, etc.
 
 
@@ -101,7 +104,11 @@ Here are some possible data sources:
     + [data.world](https://data.world/){target="_blank"}
     + [Tableau](https://public.tableau.com/en-us/s/resources){target="_blank"}
     + [Google Dataset Search](https://toolbox.google.com/datasetsearch){target="_blank"}
-    + [StatLib Datasets Archive](http://lib.stat.cmu.edu/datasets/)
+    + [StatLib Datasets Archive](http://lib.stat.cmu.edu/datasets/){target="_blank"}
+    + [CRAN medical datasets](https://higgi13425.github.io/medicaldata/){target="_blank"}
+    + [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets.php){target="_blank"}
+    + see also the [Vanderbilt Biostatistics Dataset](https://hbiostat.org/data/){target="_blank"}
+    
 
 <!--
 * You may not use the following data:
@@ -176,7 +183,7 @@ include_graphics("static/images/data_wrangling.png")
 1. The `proposal.html` HTML report file
 1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
 
-* Be sure to incorporate any feedback given to you from the data phase.
+* Be sure to incorporate any feedback given to you from the data proposal phase.
 
 
 
@@ -184,7 +191,7 @@ include_graphics("static/images/data_wrangling.png")
 
 
 
-# Project Submission {#submission}
+# Initial Project Submission {#submission}
 
 * Get a sense for the requirements of this project phase by reading only the following sections of this possible [final project submission](static/term_project/resubmission_example.html){target="_blank"} `r submission_will_differ`: 
     + Section 1: Introduction
@@ -250,4 +257,4 @@ Using the same `project_submission.Rmd` file you submitted for the project submi
 
 # Peer Review
 
-After your group submits its data, proposal, and initial project report, each group member will, individually, be required to provide feedback to several other groups. That feedback will be assessed and, along with feedback given by the instructor and TAs, should be incorporated in subsequent submissions. 
+After your group submits its data, proposal, and initial project report, each group member will, individually, be required to provide feedback to several other groups. That feedback will be assessed and, along with feedback given by the instructor and TAs, should be incorporated in subsequent submissions. Each group submission and individual peer review will count toward your individual final grade, with most of the weight being placed on the quality of the final report. Remember that you will all be held accountable for your contributions in peer evaluations; you will submit your project as a group, but you will receive an individual grade based on your contributions as well as the quality of your group's work. 
