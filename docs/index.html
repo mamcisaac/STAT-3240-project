@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Jenny Smetzer, William Hopper, Beth Brown, Albert Y. Kim, and Chester Ismay" />
 
 
-<title>ModernDive Labs</title>
+<title>Term Project</title>
 
 <script src="site_libs/header-attrs-2.15/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -34,11 +33,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
-<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
-<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
-<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
-<link rel="shortcut icon" href="static/images/favicon.png">
 
 <style type="text/css">
   code{white-space: pre-wrap;}
@@ -282,6 +276,12 @@ div.tocify {
   border-radius: 0px;
 }
 
+.tocify-subheader {
+  display: inline;
+}
+.tocify-subheader .tocify-item {
+  font-size: 0.95em;
+}
 
 </style>
 
@@ -315,36 +315,16 @@ div.tocify {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">ModernDive Labs</a>
+      <a class="navbar-brand" href="index.html">STAT 1910</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
   <a href="term_project.html">Term Project</a>
 </li>
-<li>
-  <a href="book_club.html">r4ds Book Club</a>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://moderndive.com/">Book</a>
-</li>
-<li>
-  <a href="https://moderndive.github.io/moderndive/">R Package</a>
-</li>
-<li>
-  <a href="https://github.com/moderndive/moderndive_labs">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="http://twitter.com/moderndive/">
-    <span class="fa fa-twitter fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -354,10 +334,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">ModernDive Labs</h1>
-<h4 class="author">Jenny Smetzer, William Hopper, Beth Brown, Albert Y.
-Kim, and Chester Ismay</h4>
-<h4 class="date">Last updated on 2022-08-25</h4>
+<h1 class="title toc-ignore">Term Project</h1>
 
 </div>
 
@@ -365,172 +342,353 @@ Kim, and Chester Ismay</h4>
 <style>
 h1{font-weight: 400;}
 </style>
-<!--
-{target="_blank"}
--->
-<p></br>
-<img src="static/images/wide_format.png" width="80%" style="display: block; margin: auto;" />
-</br></p>
-<div id="welcome" class="section level1">
-<h1>Welcome</h1>
-<p>Welcome to the ModernDive labs page! You can find the following
-instructor resources:</p>
+<hr />
+<div id="instructions" class="section level1 unnumbered">
+<h1 class="unnumbered">Instructions</h1>
+<p>Everything in this course builds up to the term group project, where
+there is only one learning goal: <em>Engage in the data/science research
+pipeline in as faithful a manner as possible while maintaining a level
+suitable for novices.</em></p>
+<p><img src="static/images/data_science_pipeline.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>In order to break down the task and minimize end-of-semester stress,
+you’ll be working on the project in five phases:</p>
 <ol style="list-style-type: decimal">
-<li>Example <a href="#problem-sets">problem sets and labs</a>.</li>
-<li>A <a href="#term-project-template">term project</a> template.</li>
-<li>All <a href="#previous-versions">previous online versions</a> of
-ModernDive.</li>
+<li><strong>Project groups:</strong> Form groups.</li>
+<li><strong>Project data:</strong> Propose a data set for your project.
+This is the phase of the project that is the least straightforward.
+Thus, we recommend you start early and get help during office hours
+early and often.</li>
+<li><strong>Project proposal:</strong> Ensure you can work with your
+data in R by performing an exploratory data analysis. This phase may
+require revisions to your original choice of data and visits to office
+hours or the help center for help with data wrangling.</li>
+<li><strong>Initial project submission:</strong> Make an initial
+submission of your project. You will skip some of the sections for now
+and only complete them after we have covered inference for regression in
+class. After you submit your work, you will get peer and instructor
+feedback.</li>
+<li><strong>Final project submission:</strong> Incorporate your feedback
+from the intial project submission phase, complete the remaining
+sections, and resubmit your project. The majority of your grade will
+come from this final project submission.</li>
+</ol>
+<hr />
+<p>This term project instructions and samples are modified from
+ModernDive Labs.</p>
+</div>
+<div id="groups" class="section level1" number="1">
+<h1><span class="header-section-number">1</span> Project Groups</h1>
+<ol style="list-style-type: decimal">
+<li>You will work in the same group that you work with in class.
+<ul>
+<li>Complete the Team Formation Survey. The groups will be selected to
+balance characteristics across groups.</li>
+<li>All groups members are expected to contribute and you will all be
+held accountable for your contributions in peer evaluations.</li>
+</ul></li>
+<li>Choose a group name.</li>
+<li>Assign a “team/group leader” who will have a few extra
+administrative duties at each phase. Ex: making submissions, filling out
+Google Forms, etc.</li>
 </ol>
 <hr />
 </div>
-<div id="problem-sets" class="section level1">
-<h1>Problem Sets</h1>
-<p>Jenny Smetzer, William Hopper, <a
-href="https://www.gcc.mass.edu/math/faculty/" target="_blank">Beth
-Brown</a> and Albert Y. Kim (Smith College) have produced problem sets
-and lab materials for ModernDive:</p>
+<div id="data" class="section level1" number="2">
+<h1><span class="header-section-number">2</span> Project Data</h1>
+<p><strong>This is the phase of the project that is the least
+straightforward. Thus, we recommend you start early and get help during
+office hours early and often.</strong></p>
 <ul>
-<li><strong>PS01: Introduction to R</strong>:
+<li>Get a sense for the requirements of this project phase by reading a
+possible <a href="static/term_project/data_example.html"
+target="_blank">example data proposal</a> (Note that your data proposal
+will likely differ slightly from this one):</li>
+<li>Download the following
+<a href="static/term_project/data.Rmd" download><code>data.Rmd</code></a>
+template R Markdown file and fill it in.</li>
+</ul>
+<div id="find-data" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Find data</h2>
+<div id="specifications" class="section level3 unnumbered">
+<h3 class="unnumbered">Specifications</h3>
+<p>Find a data set that fits these specifications. Note your data may
+need a little wrangling from its original form.</p>
+<ol style="list-style-type: decimal">
+<li>(If available) An <a
+href="https://moderndive.com/1-getting-started.html#identification-vs-measurement-variables"
+target="_blank">identification variable</a> that uniquely identifies
+each observation in each row.</li>
+<li>A numerical outcome variable <span class="math inline">\(y\)</span>.
+Note: binary outcomes variables with 0/1 values are not technically
+numerical.</li>
+<li>Two explanatory variables:
 <ul>
-<li><a href="static/PS/PS01_intro_to_R_RStudio.html"
-target="_blank">Problem set</a></li>
+<li>A numerical explanatory variable <span
+class="math inline">\(x_1\)</span>. Note: this can be some notion of
+time.</li>
+<li>A categorical explanatory variable <span
+class="math inline">\(x_2\)</span> that has between 3-5 levels. Note: If
+your data has more than 5 levels, they can be collapsed into 5 using
+data wrangling later.</li>
 </ul></li>
-<li><strong>PS02: Data visualization with <code>ggplot2</code></strong>:
+<li>At least 50 observations/rows.</li>
+</ol>
+</div>
+<div id="possible-sources" class="section level3 unnumbered">
+<h3 class="unnumbered">Possible sources</h3>
+<p>Here are some possible data sources:</p>
 <ul>
-<li>A short <a href="static/PS/PS02_pre_lecture.pdf"
-target="_blank">pre-lecture</a> explaning the Grammar of Graphics as
-implemented in the <code>ggplot2</code> package</li>
-<li><a href="static/PS/PS02_data_viz.html" target="_blank">Problem
-set</a></li>
-</ul></li>
-<li><strong>PS03: Data wrangling with <code>dplyr</code></strong>:
+<li>Best option: data from your own research or other courses! The more
+connected you feel with your data, the more motivated you will be for
+this project.</li>
+<li>Next best options: Online data repositories such as (but not limited
+to):
 <ul>
-<li>A short <a href="static/PS/PS03_pre_lecture.pdf"
-target="_blank">pre-lecture</a> explaning the <code>%&gt;%</code>
-operator and <code>dplyr</code> wrangling verbs<br />
-</li>
-<li><a href="static/PS/PS03_data_wrangling.html" target="_blank">Problem
-set</a></li>
-</ul></li>
-<li><strong>PS04: Regression with one numerical variable</strong>:
-<ul>
-<li><a href="static/PS/PS04_reg_one_num_x.html" target="_blank">Problem
-set</a></li>
-</ul></li>
-<li><strong>PS05: Regression with one categorical variable</strong>:
-<ul>
-<li><a href="static/PS/PS05_reg_one_cat_x.html" target="_blank">Problem
-set</a></li>
-</ul></li>
-<li><strong>PS06: Multiple regression with one numerical and one
-categorical variable</strong>:
-<ul>
-<li><a href="static/PS/PS06_multiple_reg.html" target="_blank">Problem
-set</a></li>
-</ul></li>
-<li><strong>PS07: Sampling distributions</strong>:
-<ul>
-<li>A short <a href="static/PS/PS07_pre_lecture.html"
-target="_blank">recap exercise</a> on the effect of sample size on
-sampling distributions</li>
-<li><a href="static/PS/PS07_sampling_dist.html" target="_blank">Problem
-set</a></li>
-</ul></li>
-<li><strong>PS08: Confidence intervals and the bootstrap</strong>:
-<ul>
-<li><a href="static/PS/PS08_CI_bootstrap.html" target="_blank">Problem
-set</a></li>
-</ul></li>
-<li><strong>PS09: Hypothesis testing</strong>:
-<ul>
-<li><a href="static/PS/PS09_hypothesis_testing.html"
-target="_blank">Problem set</a></li>
-</ul></li>
-<li><strong>NEW - PS10: Inference for regression</strong>:
-<ul>
-<li><a href="static/PS/PS10_inference_for_regression.html"
-target="_blank">Problem set</a></li>
+<li><a href="https://ipums.org/" target="_blank">IPUMS survey &amp;
+census data</a></li>
+<li><a href="https://data.world/" target="_blank">data.world</a></li>
+<li><a href="https://public.tableau.com/en-us/s/resources"
+target="_blank">Tableau</a></li>
+<li><a href="https://toolbox.google.com/datasetsearch"
+target="_blank">Google Dataset Search</a></li>
+<li><a href="http://lib.stat.cmu.edu/datasets/">StatLib Datasets
+Archive</a></li>
 </ul></li>
 </ul>
-<p>Resources:</p>
+<!--
+* You may not use the following data:
+    + Any datasets used in this class, either in ModernDive or in any of the examples.
+    + Any data from the data journalism website FiveThirtyEight.com
+-->
+</div>
+<div id="note-on-data-confidentiallity"
+class="section level3 unnumbered">
+<h3 class="unnumbered">Note on data confidentiallity</h3>
+<p>If your data is not confidential or sensitive in nature, then publish
+your data as a CSV file on Google Sheets. That way your group can all
+access a single copy of your data on the web. If your data is
+confidential or sensitive in nature, <strong>do not</strong> publish it
+on the web, but rather submit the Excel or CSV file as well.</p>
+<p>You can publish your data as a CSV file on Google Sheets by following
+the 6 steps in this Twitter thread:</p>
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">
+<ol start="2" style="list-style-type: decimal">
+<li>Go to File -&gt; Publish to the web …
+<a href="https://t.co/CeM3IIemFU">pic.twitter.com/CeM3IIemFU</a>
+</p>
+— Albert Y. Kim (<span class="citation">@rudeboybert</span>)
+<a href="https://twitter.com/rudeboybert/status/1055821837551235073?ref_src=twsrc%5Etfw">October
+26, 2018</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></li>
+</ol>
+</div>
+</div>
+<div id="what-to-submit" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> What to submit</h2>
+<p>Only one group member will make a single submission on behalf of the
+whole group. They will submit:</p>
+<ol style="list-style-type: decimal">
+<li>The <code>data.Rmd</code> R Markdown file</li>
+<li>The <code>data.html</code> HTML report file</li>
+<li>Only if your data is confidential or sensitive in nature, submit
+your Excel or CSV file as well. Otherwise you should publish your data
+as a CSV file on Google Sheets as described above.</li>
+</ol>
+</div>
+<div id="hints" class="section level2" number="2.3">
+<h2><span class="header-section-number">2.3</span> Hints</h2>
 <ul>
-<li>Download all necessary files to reproduce these problem sets here:
-<a href="static/PS/ModernDive_PS.zip" download><code>ModernDive_PS.zip</code></a>.</li>
-<li>Obtain solutions (verified instructors only) by filling out this <a
-href="https://docs.google.com/forms/d/e/1FAIpQLSf68Je_Q3ggRJ-74UtL0xG5-IuuKkSTIpEQZWro-8QbO7nmdA/viewform"
-target="_blank">Google Form</a>.</li>
+<li><p><strong>Where is this heading?</strong>: For the next project
+phase (project proposal), you will be making a visualization like this
+<a href="static/term_project/proposal_example.html#colored-scatterplot"
+target="_blank">one</a>. If you can make a visualization like this one,
+then your data is set for the rest of the project.</p></li>
+<li><p>When you have questions:</p>
+<ul>
+<li>Please ask questions that you think the entire class would like to
+know the answer to in the <code>project</code> folder on Piazza; if
+necessary, you can make the post private.</li>
+</ul></li>
+<li><p>Only minimal data wrangling using the <code>dplyr</code> package
+is expected at this time; you will be doing more for the “project
+proposal” phase coming up. That being said, feel free to
+experiment!</p></li>
+<li><p>Disclaimer: Just because things seem good now doesn’t mean your
+project data is set for semester. Unforeseen problems may crop up during
+the next phase on data wrangling, at which point you may need to revise
+your data. This is a reality of data collection in the real
+world!</p></li>
+<li><p>Do not include any <code>View()</code> statements in your
+<code>.Rmd</code> files as this may cause an error.</p></li>
+<li><p>Avoid “data dumps”. For example, showing the contents of all 1000
+rows in a data frame. This will make your output document really large
+and unreadable.</p></li>
 </ul>
 <hr />
 </div>
-<div id="term-project-template" class="section level1">
-<h1>Term Project</h1>
-<p>We at ModernDive are enthusiastic proponents of the following
-learning goal for any course that uses our book: <em>Engage in the <a
-href="https://r4ds.had.co.nz/introduction.html"
-target="_blank">data/science research pipeline</a> in as faithful a
-manner as possible while maintaining a level suitable for novices.</em>
-We think the best way to satisfy this learning goal is for students to
-complete a term project!</p>
-<p><img src="static/images/data_science_pipeline.png" width="80%" style="display: block; margin: auto;" /></p>
-<p>Resources:</p>
+</div>
+<div id="proposal" class="section level1" number="3">
+<h1><span class="header-section-number">3</span> Project Proposal</h1>
+<p><strong>This phase may require revisions to your original choice of
+data and visits to office hours or the help center for help with data
+wrangling.</strong></p>
 <ul>
-<li>Check out an <a href="static/term_project/resubmission_example.html"
-target="_blank">example term project</a> by Alexis Cohen, Andrianne Dao,
-and Isabel Gomez analyzing Massachusetts high school data.</li>
-<li>For more information on how we present the term project to students,
-see the <a href="term_project.html">Term Project</a> page.</li>
-<li>Be sure to look at our <a
+<li>Get a sense for the requirements of this project phase by reading a
+possible <a href="static/term_project/proposal_example.html"
+target="_blank">example project proposal</a> (Note that your data
+proposal will likely differ slightly from this one):</li>
+<li>Download the following
+<a href="static/term_project/proposal.Rmd" download><code>proposal.Rmd</code></a>
+template R Markdown file and start filling it in.</li>
+</ul>
+<div id="work-on-your-proposal" class="section level2" number="3.1">
+<h2><span class="header-section-number">3.1</span> Work on your
+proposal</h2>
+<p>Your data may require some wrangling to get it in the appropriate
+format. Given that this is not a class where data wrangling is a central
+focus, we suggest you check out the following resources:</p>
+<ol style="list-style-type: decimal">
+<li>The SMCS help center.</li>
+<li>Be sure to look at the <a
 href="https://moderndive.com/C-appendixC.html#data-wrangling"
 target="_blank">data wrangling “Tips &amp; Tricks”</a> ModernDive page
 written by Jenny Smetzer. It’s based on the seven most common data
-wrangling questions we’ve encountered from students while they were
+wrangling questions they’ve encountered from students while they were
 working on their term projects:</li>
-</ul>
+</ol>
 <p><img src="static/images/data_wrangling.png" width="70%" style="display: block; margin: auto;" /></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Post your question in Piazza.</li>
+</ol>
+</div>
+<div id="what-to-submit-1" class="section level2" number="3.2">
+<h2><span class="header-section-number">3.2</span> What to submit</h2>
+<p>Only one group member will make a single submission on behalf of the
+whole group. They will submit:</p>
+<ol style="list-style-type: decimal">
+<li>The <code>proposal.Rmd</code> R Markdown file</li>
+<li>The <code>proposal.html</code> HTML report file</li>
+<li>Only if your data is confidential or sensitive in nature, submit
+your Excel or CSV file as well. Otherwise you should publish your data
+as a CSV file on Google Sheets as described above.</li>
+</ol>
+<ul>
+<li>Be sure to incorporate any feedback given to you from the data
+phase.</li>
+</ul>
 <hr />
 </div>
-<div id="previous-versions" class="section level1">
-<h1>Previous Versions</h1>
-<p>These are the <strong>previous online versions</strong> of the
-ModernDive textbook that may be out of date:</p>
+</div>
+<div id="submission" class="section level1" number="4">
+<h1><span class="header-section-number">4</span> Project Submission</h1>
 <ul>
-<li><a href="static/previous_versions/v1.0.0/index.html"
-target="_blank">Version 1.0.0</a> released on November 25, 2019 (<a
-href="https://github.com/moderndive/ModernDive_book/releases/tag/v1.0.0"
-target="_blank">source code</a>)</li>
-<li><a href="static//previous_versions/v0.6.1/index.html"
-target="_blank">Version 0.6.1</a> released on August 28, 2019 (<a
-href="https://github.com/moderndive/ModernDive_book/releases/tag/v0.6.1"
-target="_blank">source code</a>)</li>
-<li><a href="static/previous_versions/v0.6.0/index.html"
-target="_blank">Version 0.6.0</a> released on August 7, 2019 (<a
-href="https://github.com/moderndive/moderndive_book/releases/tag/v0.6.0"
-target="_blank">source code</a>)</li>
-<li><a href="static/previous_versions/v0.5.0/index.html"
-target="_blank">Version 0.5.0</a> released on February 24, 2019 (<a
-href="https://github.com/moderndive/moderndive_book/releases/tag/v0.5.0"
-target="_blank">source code</a>)</li>
-<li><a href="static/previous_versions/v0.4.0/index.html"
-target="_blank">Version 0.4.0</a> released on July 21, 2018 (<a
-href="https://github.com/moderndive/moderndive_book/releases/tag/v0.4.0"
-target="_blank">source code</a>)</li>
-<li><a href="static/previous_versions/v0.3.0/index.html"
-target="_blank">Version 0.3.0</a> released on February 3, 2018 (<a
-href="https://github.com/moderndive/moderndive_book/releases/tag/v0.3.0"
-target="_blank">source code</a>)</li>
-<li><a href="static/previous_versions/v0.2.0/index.html"
-target="_blank">Version 0.2.0</a> released on August 2, 2017 (<a
-href="https://github.com/moderndive/moderndive_book/releases/tag/v0.2.0"
-target="_blank">source code</a>)</li>
-<li><a href="static/previous_versions/v0.1.3/index.html"
-target="_blank">Version 0.1.3</a> released on February 9, 2017 (<a
-href="https://github.com/moderndive/moderndive_book/releases/tag/v0.1.3"
-target="_blank">source code</a>)</li>
-<li><a href="static/previous_versions/v0.1.2/index.html"
-target="_blank">Version 0.1.2</a> released on January 22, 2017 (<a
-href="https://github.com/moderndive/moderndive_book/releases/tag/v0.1.2"
-target="_blank">source code</a>)</li>
+<li>Get a sense for the requirements of this project phase by reading
+only the following sections of this possible <a
+href="static/term_project/resubmission_example.html"
+target="_blank">final project submission</a> (Note that your data
+proposal will likely differ slightly from this one):
+<ul>
+<li>Section 1: Introduction</li>
+<li>Section 2: Exploratory data analysis</li>
+<li>Section 3 subsections 3.1, 3.2, and 3.3: Multiple linear regression:
+Methods, Model Results, Interpreting the regression table.<br />
+</li>
+</ul></li>
+<li>Download the following
+<a href="static/term_project/submission_example.Rmd" download><code>project_submission_example.Rmd</code></a>
+sample R Markdown file and start filling it in for your project.</li>
 </ul>
+<div id="complete-your-initial-submission" class="section level2"
+number="4.1">
+<h2><span class="header-section-number">4.1</span> Complete your initial
+submission</h2>
+<ul>
+<li>Incorporate any feedback given to you from the proposal phase.</li>
+<li>Complete the following sections of your
+<code>project_submission.Rmd</code> file:
+<ul>
+<li>Section 1: Introduction</li>
+<li>Section 2: Exploratory data analysis</li>
+<li>Section 3 subsections 3.1, 3.2, and 3.3: Multiple linear regression:
+Methods, Model Results, Interpreting the regression table.</li>
+</ul></li>
+<li>Do not complete the following sections (you’ll be doing this at the
+final submission phase):
+<ul>
+<li>Section 3 subsections 3.4, 3.5: Inference for multiple
+regression</li>
+<li>Section 4: Discussion. You will write this conclusion based on the
+results of sections 3.4 and 3.5.</li>
+</ul></li>
+</ul>
+</div>
+<div id="what-to-submit-2" class="section level2" number="4.2">
+<h2><span class="header-section-number">4.2</span> What to submit</h2>
+<p>Only one group member will make a single submission on behalf of the
+whole group. They will submit:</p>
+<ol style="list-style-type: decimal">
+<li>The <code>project_submission.Rmd</code> R Markdown file with
+sections 1, 2, 3.1, 3.2, and 3.3 completed</li>
+<li>The <code>project_submission.html</code> HTML report file.</li>
+<li>Only if your data is confidential or sensitive in nature, submit
+your Excel or CSV file as well. Otherwise you should publish your data
+as a CSV file on Google Sheets as described above.</li>
+</ol>
+<hr />
+</div>
+</div>
+<div id="resubmission" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Final Project
+Submission</h1>
+<p>Get a sense for the requirements of this project phase by re-reading
+all the sections of the possible <a
+href="static/term_project/resubmission_example.html"
+target="_blank">final project submission</a> from the previous
+submission phase. In particular, read the following new sections:</p>
+<ul>
+<li>Sections 3.4, 3.5: Inference for multiple regression</li>
+<li>Section 4: Discussion.</li>
+</ul>
+<div id="revise-your-initial-submission" class="section level2"
+number="5.1">
+<h2><span class="header-section-number">5.1</span> Revise your initial
+submission</h2>
+<p>Using the same <code>project_submission.Rmd</code> file you submitted
+for the project submission phase:</p>
+<ul>
+<li>Incorporate any feedback given to you from the project submission
+phase.</li>
+<li>Complete Sections 3.4 and 3.5: Inference for multiple
+regression</li>
+<li>Complete Section 4: Discussion. You will write this conclusion based
+on the results of sections 3.4 and 3.5.</li>
+</ul>
+</div>
+<div id="what-to-submit-3" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> What to submit</h2>
+<p>Only one group member will make a single submission on behalf of the
+whole group. They will submit:</p>
+<ol style="list-style-type: decimal">
+<li>The updated <code>project_submission.Rmd</code> R Markdown
+file.</li>
+<li>The updated <code>project_submission.html</code> HTML report
+file.</li>
+<li>Only if your data is confidential or sensitive in nature, submit
+your Excel or CSV file as well. Otherwise you should publish your data
+as a CSV file on Google Sheets as described above.</li>
+</ol>
+<hr />
+</div>
+</div>
+<div id="peer-review" class="section level1" number="6">
+<h1><span class="header-section-number">6</span> Peer Review</h1>
+<p>After your group submits its data, proposal, and initial project
+report, each group member will, individually, be required to provide
+feedback to several other groups. That feedback will be assessed and,
+along with feedback given by the instructor and TAs, should be
+incorporated in subsequent submissions.</p>
 </div>
 
 
@@ -591,8 +749,8 @@ $(document).ready(function ()  {
       ignoreSelector: ".toc-ignore",
       scrollTo: 0
     };
-    options.showAndHide = true;
-    options.smoothScroll = true;
+    options.showAndHide = false;
+    options.smoothScroll = false;
 
     // tocify
     var toc = $("#TOC").tocify(options).data("toc-tocify");
