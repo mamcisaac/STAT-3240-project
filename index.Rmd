@@ -47,7 +47,8 @@ include_graphics("static/images/data_science_pipeline.png")
 In order to break down the task and minimize end-of-semester stress, you'll be working on the project in five phases:
 
 1. **Project groups:** Form groups.
-1. **Project data:** Propose a data set for your project. `r hint_1`. After you submit your data proposal, you will get peer and instructor feedback that you should incorporate in your project proposal.  1. **Project proposal:** Ensure you can work with your data in R by performing an exploratory data analysis. `r hint_2` After you submit your project prosal, you will get peer and instructor feedback that you should incorporate in your initial project submission. 
+1. **Project data:** Propose a data set for your project. `r hint_1`. After you submit your data proposal, you will get peer and instructor feedback that you should incorporate in your project proposal.
+1. **Project proposal:** Ensure you can work with your data in R by performing an exploratory data analysis. `r hint_2` After you submit your project prosal, you will get peer and instructor feedback that you should incorporate in your initial project submission. 
 1. **Initial project submission:** Make an initial submission of your project. You will skip some of the sections for now and only complete them after we have covered inference for regression in class. After you submit your work, you will get peer and instructor feedback that you should incorporate in your final report. 
 1. **Final project submission:** Incorporate your feedback from the intial project submission phase, complete the remaining sections, and resubmit your project. The majority of your grade will come from this final project submission.
 
