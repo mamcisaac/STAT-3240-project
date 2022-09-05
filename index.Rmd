@@ -101,6 +101,7 @@ Here are some possible data sources:
 
 * Best option: data from your own research or other courses! The more connected you feel with your data, the more motivated you will be for this project.
 * Next best options: Online data repositories such as (but not limited to):
+    + [The Government of Canada's Open Data Portal](https://open.canada.ca/en/open-data)
     + [IPUMS survey & census data](https://ipums.org/){target="_blank"}
     + [data.world](https://data.world/){target="_blank"}
     + [Tableau](https://public.tableau.com/en-us/s/resources){target="_blank"}
@@ -108,7 +109,16 @@ Here are some possible data sources:
     + [StatLib Datasets Archive](http://lib.stat.cmu.edu/datasets/){target="_blank"}
     + [CRAN medical datasets](https://higgi13425.github.io/medicaldata/){target="_blank"}
     + [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets.php){target="_blank"}
+    + [Statistics Canada Public Use Microdata Files](https://www150.statcan.gc.ca/n1/en/type/data#publicusemicrodata)
+    + [World Bank Open Data](https://data.worldbank.org)
+    + [UN Open SDG Data Hub](https://unstats-undesa.opendata.arcgis.com)
+    + [Gapminder](https://www.gapminder.org/data/)
+    + [Programme for International Student Assessment database](https://www.oecd.org/pisa/data/)
     + see also the [Vanderbilt Biostatistics Dataset](https://hbiostat.org/data/){target="_blank"}
+    + and the [cansim package in R](https://cran.r-project.org/web/packages/cansim/vignettes/cansim.html)
+    + and [ROpenSci](https://ropensci.org/packages/data-access/)
+    + and this paper on [Open government data and environmental science: a federal Canadian perspective](https://www.facetsjournal.com/doi/full/10.1139/facets-2020-0008)
+    
     
 
 <!--
