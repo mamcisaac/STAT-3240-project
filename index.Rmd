@@ -204,7 +204,7 @@ include_graphics("static/images/data_wrangling.png")
 
 # Initial Project Submission {#submission}
 
-* Get a sense for the requirements of this project phase by reading only the following sections of this possible [final project submission](static/term_project/resubmission_example.html){target="_blank"} `r submission_will_differ`: 
+* Get a sense for the requirements of this project phase by reading only the following sections of this possible [final project submission](static/term_project/submission_example.html){target="_blank"} `r submission_will_differ`: 
     + Section 1: Introduction
     + Section 2: Exploratory data analysis
     + Section 3 subsections 3.1, 3.2, and 3.3: Multiple linear regression: Methods, Model Results, Interpreting the regression table.    
