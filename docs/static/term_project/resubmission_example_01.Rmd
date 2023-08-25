@@ -1,0 +1,372 @@
+
+---
+title: "Predictive Factors of Profitability in Movies"
+author: "Team 07: [individual names redacted]"
+date: "Last updated on [date redacted]"
+output:
+  html_document:
+    fig_caption: yes
+    theme: lumen
+    toc: yes
+    toc_depth: 2
+    df_print: kable
+    toc_float:
+      collapsed: no
+---
+
+```{r, include=FALSE}
+# Do not edit this code block/chunk
+knitr::opts_chunk$set(echo = FALSE, message=FALSE, warning = FALSE, fig.width = 16/2.5, fig.height = 9/2.5)
+```
+
+
+```{r}
+# Load all necessary packages here:
+library(ggplot2)
+library(dplyr)
+library(janitor)
+library(moderndive)
+library(readr)
+library(knitr)
+```
+
+```{r}
+# Copy over all your data wrangling code here:
+movies_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT-DqFII3DOoUeCKuVe-gZASgKWJPgM7JnHhhUUGgcXpdLjx4KmYnUZiR1kQ0mjOg/pub?gid=1286148029&single=true&output=csv")
+
+# clean variable names
+movies_data <- movies_data %>% clean_names()
+
+# This removes the first row of the data set. 
+movies_data <- movies_data[-1,]
+
+# This code makes some categorical levels be renamed under one categorical level called "Other".
+movies_data$genre <- recode(movies_data$genre, Fantasy = "Other", Adventure = "Other", Romance = "Other", Animation = "Other", Thriller = "Other")
+
+# These two lines of code removes the percentage sign from the values and convert them into a numerical value.
+movies_data <- movies_data %>% mutate(profitability = parse_number(profitability))
+movies_data <- movies_data %>% mutate(rotten_tomatoes = parse_number(rotten_tomatoes))
+
+# select only the variables we need. Note the order in which we select:
+movies_data <- movies_data %>% select(film, profitability, rotten_tomatoes, genre, lead_studio)
+
+# Remove the 3 rows corresponding to movies that had missing data for profitability, genre and rotten tomatoes.
+movies_data <- movies_data %>% filter(!is.na(profitability))
+movies_data <- movies_data %>% filter(!is.na(genre))
+movies_data <- movies_data %>% filter(!is.na(rotten_tomatoes))
+```
+
+
+
+***
+
+
+
+# 1. Introduction 
+
+This study aims to understand how and whether rotten tomatoes ratings will influence the profitability of Hollywood movies. To be specific the question is whether the ratings and genre of movies will affect the percentage of profitability for Hollywood movies. 
+
+We have data from different genres of various profitable Hollywood movies in 2011 and its corresponding variables that describe it. The data set contains the rotten tomatoes ratings and profitability of the movies, both of which are measured in percentage. The data was obtained from the orignial source itself which was the "information is beautiful" website, in which you can access it through a title named "Hollywood Budgets"^[Quick, Miriam, et al. _Hollywood Budgets_. InformationisBeautiful, Feb. 2014. Web. https://informationisbeautiful.net/2012/hollywood-budgets-a-5000-data-viz-challenge/].
+
+We decided to focus on the Profitability as our outcome variable in order to make this report more concise. We included two explanatory variables in this analysis: the rotten tomatoes ratings, and genre of movies, five levels, "Action", "Comedy", "Drama", "Horror" and "Other", which was 10 levels before data wrangling. We had to remove the first row of the data set because it displayed only the units of measurement of the columns. We had to remove the percentage sign from the values under the "probability" variable and convert the values of "probability" and "rotten tomatoes" variables from string to numerical to conduct exploratory analysis.
+
+Here is a snapshot of 5 randomly chosen rows of the data set we'll use:
+
+```{r}
+movies_data %>% sample_n(5)
+```
+
+
+
+***
+
+
+
+# 2. Exploratory data analysis
+
+We had an original sample size of 143 movies. These were observations, where there were no information available in its columns like "profitability", "genre", "rotten_tomatoes", and "lead_studio". The observation that can be identified as "Average" in the "film" category, is not a film but the row used to calculate the average of the numerical variables. This observation was not useful as it only partly collected average values of the whole data set and was placed in between categorical values which could be easily misunderstood. Also the first row of the original data only displayed the corresponding units of measurement of the variables. Therefore, those 4 observations had to be ignored for further exploratory and numerical analysis. Unfortunately, no information was provided as to why some movies had missing values and most didn't, so we cannot comment on the impact dropping these missing cases has on our results. 
+
+Our total sample size was 139 (Table 1). The mean of the profitability of movies was greatest for Horror movies (n = 16, $\bar{x}$ = 852.9, sd = 1795.1), and lowest for Action movies (n = 31, $\bar{x}$ = 240.4, sd = 152.5). 
+
+The rotten tomatoes ratings of movies ranged from 4% to 97% ($\bar{x}$ = 54.6, sd = 26.8). 
+
+```{r include = F}
+movies_data %>% 
+  summarize(min = min(rotten_tomatoes), 
+            max = max(rotten_tomatoes), 
+            mean = mean(rotten_tomatoes), 
+            sd = sd(rotten_tomatoes))
+```
+
+
+
+***
+
+Table 1. Summary statistics of Profitability for Action, Horror, Comedy, Drama and Other genre of movies.
+
+```{r}
+movies_data %>% 
+  group_by(genre) %>% 
+  summarize(n = n(), 
+            mean = mean(profitability, na.rm = T), 
+            median = median(profitability, na.rm = T), 
+            sd = sd(profitability, na.rm = T), 
+            min = min(profitability, na.rm = T), 
+            max = max(profitability, na.rm = T))
+```
+
+***
+
+In our histogram, the distribution is right skewed. Most films are having profitability between 0% and approximately 1000 % but there are two outliers with relatively high profitability and they are Paranormal Activity 3 with a profitability of over 4000% and Insidious with over 6000% profitability with both being horror movies.
+
+```{r, fig.cap = "Figure 1. Distribution of the Profitabilty of Movies.", fig.align = "center"}
+ggplot(movies_data, aes(x = profitability)) +
+  geom_histogram(binwidth = 30, color = "white", fill = "steelblue") +
+  labs(x = "Profitability (%)", y = "Number of Films based on the Profitability") 
+```
+
+There is slightly positive correlation and linear relationship between profitability and Rotten Tomatoes ratings of movies which means the higher the rotten tomatoes scores of the movie the more likely the movie is to be profitable. Consistent with this relationship is this weak positive correlation coefficient of 0.16. 
+
+```{r include = F}
+movies_data %>%  
+  summarize(cor(profitability, rotten_tomatoes))
+```
+
+```{r, fig.cap = "Figure 2. Scatterplot of relationship between Profitability and Rotten Tomatoes Rating of Movies.", fig.align = "center"}
+ggplot(movies_data, aes(x = rotten_tomatoes, y = profitability))+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE ) +
+  labs(y = "Profitability (%)", 
+       x = "Rotten Tomatoes (%)")
+```
+
+In this distribution our films are grouped based on their genre and profitability is the highest in "Other" films and the lowest in "Action" films. There are no significant differences between the displayed boxplots but the "Action" boxplot is the only one that does not have an outlier. The genre "Comedy" has the biggest spread while the genre "Action" has the smallest spread.
+
+```{r, fig.cap = "Figure 3. Boxplot of relationship between Profitability and Genre of Movies.", fig.align = "center"}
+ggplot(movies_data, aes(x = genre, y = profitability, fill = genre)) +
+  geom_boxplot() +
+  labs(y = "Profitability (%)", x = "Genre")
+```
+
+This is the same as the previous scatter plot but now each genre has its own line of best fit and the data points are colored by their genre which is shown in the legend. Based on the genre "Horror", it has the most positive linear relationship which could be due to its  high value outliers. All the other genres have their slopes roughly similar. 
+
+```{r, fig.cap = "Figure 4. Colored scatterplot of relationship between Profitability and both Rotten Tomatoes Ratings and Genre of Movies.", fig.align = "center"}
+ggplot(movies_data, aes(x = rotten_tomatoes, y = profitability, color = genre))+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE ) +
+  labs(y = "Profitability (%)", x = "Rotten Tomatoes (%)")
+```
+
+
+
+***
+
+
+
+# 3. Multiple linear regression
+
+## 3.1 Methods
+
+The components of our multiple linear regression model are the following:
+
+* Outcome variable $y$ = Profitability of Movies (%)
+* Numerical explanatory variable $x_1$ = Rotten Tomatoes Ratings of Movies (%)
+* Categorical explanatory variable $x_2$ = Genre of the Movies
+
+where the unit of analysis are the movies, given that each row in our dataset corresponds to a unique film. 
+
+
+## 3.2 Model Results
+
+***
+
+Table 2. Regression table of parallel slopes model of Profitability as a function of percentage of rotten tomatoes and genre of movies.
+ 
+```{r}
+math_model <- lm(profitability ~ rotten_tomatoes + genre, data = movies_data)
+get_regression_table(math_model)
+```
+
+***
+
+## 3.3 Interpreting the regression table
+
+The regression equation for Profitability is the following:
+
+$$
+\begin{aligned}\widehat {profitability} =& b_{0} + b_{rt} \cdot rt + b_{cmdy} \cdot 1_{is\ cmdy}(x_2) + b_{drm} \cdot 1_{is\ drm}(x_2) + b_{hor} \cdot 1_{is\ hor}(x_2) + b_{oth} \cdot 1_{is\ oth}(x_2) \\
+ =& -14.428 + 5.668 \cdot rt + 52.644 \cdot 1_{is\ cmdy}(x_2) - 91.930 \cdot 1_{is\ drm}(x_2) + 637.124 \cdot 1_{is\ hor}(x_2) + 45.645 \cdot 1_{is\ oth}(x_2)
+\end{aligned} 
+$$
+
+* The intercept ($b_0$ = -14.428) represents the Profitability when there is zero percent rotten tomatoes ratings and the genre is action movies (Table 2).
+* The estimate for the slope for rotten tomatoes ($b_{rt}$ = 5.668) is the associated change in profitability depending on the rotten tomatoes ratings. Based on this estimate, for every one percentage point increase in the rotten tomatoes ratings of movies, there was an associated increase in Profitability of an average 5.668 points.
+* The estimate for comedy movies ($b_{cmdy}$ = 52.644), drama movies ($b_{drm}$ = -91.93), horror movies ($b_{hor}$ = 637.124), and other movies ($b_{oth}$ = 45.645) are the offsets in intercept relative to the baseline group's, action movies, intercept (Table 2). In other words, on average comedy movies score 52.644 points more than action movies while drama movies scored on average 91.93 lower (the same logic is applied to the rest of the movie genres).
+
+Thus the five regression lines have equations:
+
+$$
+\begin{aligned}
+\text{Action movies (in red)}: \widehat {profitability} =& -14.428 + 5.668 \cdot rt\\
+\text{Comedy movies (in dark green)}: \widehat {profitability} =& 38.216 + 5.668 \cdot rt\\
+\text{Drama movies (in light green)}: \widehat {profitability} =& -106.358 + 5.668 \cdot rt\\
+\text{Horror movies (in blue)}: \widehat {profitability} =& 622.696 + 5.668 \cdot rt\\
+\text{Other movies (in pink)}: \widehat {profitability} =& 31.217 + 5.668 \cdot rt
+\end{aligned} 
+$$
+
+## 3.4 Inference for multiple regression
+
+Using the output of our regression table we’ll test two different null hypotheses. The first null hypothesis is that there is no relationship between rotten tomatoes ratings and Profitability at the population level (the population slope is zero).
+
+$$
+\begin{aligned}
+\text H_{0} :& \beta_{rt} = 0\\
+\text vs\ H_{a} :& \beta_{rt} ≠ 0\\
+\end{aligned} 
+$$
+
+There appears to be a positive relationship between the rotten tomatoes and profitability $b_{rt}$ = 5.668. Furthermore, this appears to be a meaningful relationship since in Table 2 we see
+
+* the 95% confidence interval for the population slope $β_{rt}$ is (1.410,9.926), entirely on the positive side 
+
+* the p-value p<0.001 is rather small, so we reject the null hypothesis $H_{0}$ that $β_{rt}$ = 0 in favor of the alternative $H_{A}$ that $β_{rt}$ is indeed not 0 and positive.
+
+So taking into account potential sampling variation in results (for example if we collected similar data but for a different year) the relationship does appear to be positive.
+
+The second set of null hypotheses that we are test are that all the differences in intercept for the non-baseline groups are zero.
+
+$$
+\begin{aligned}
+\text H_{0} :& \beta_{cmdy} = 0\\
+\text vs\ H_{a} :& \beta_{cmdy} ≠ 0\\
+\end{aligned} 
+$$
+and
+$$
+\begin{aligned}
+\text H_{0} :& \beta_{drm} = 0\\
+\text vs\ H_{a} :& \beta_{drm} ≠ 0\\
+\end{aligned} 
+$$
+and
+$$
+\begin{aligned}
+\text H_{0} :& \beta_{hor} = 0\\
+\text vs\ H_{a} :& \beta_{hor} ≠ 0\\
+\end{aligned} 
+$$
+and
+$$
+\begin{aligned}
+\text H_{0} :& \beta_{oth} = 0\\
+\text vs\ H_{a} :& \beta_{oth} ≠ 0\\
+\end{aligned} 
+$$
+
+In other words “is the intercept for the action genre equal to the intercepts for the rest of the genres or not?” While both observed differences in intercept were negative ($b_{cmdy}$ = 52.644, $b_{drm}$ = -91.930, $b_{hor}$ = 637.124, and $b_{oth}$ = 45.645) we observe in Table 2 that
+
+* the 95% confidence intervals for the population difference in intercept $β_{cmdy}$, $β_{drm}$ and $β_{oth}$ both include 0: (-267.473, 372.762), (-439.908, 256.048) and (-263.443, 354.734) respectively but the intercept $β_{hor}$ does not include 0: (255.866, 1018.382). So it is plausible that the difference of those intercepts are not zero, hence it is plausible that all intercepts are not the same.
+
+* The respective p-values are fairly large (0.745, 0.602 and 0.771) except p-value of horror genre (0.001), so we fail to reject all null hypothesis that they are 0, but we reject the null hypothesis when dealing with horror genre.
+
+So it appears the differences in intercept except one are not meaningfully different from 0, and hence only four intercepts out of five are roughly equal. This consistent with our observations from the visualization of the five regression lines in Figure 4.
+
+## 3.5 Residual Analysis
+
+We conducted a residual analysis to see if there was any systematic pattern of residuals for the statistical model we ran. Because if there are systematic patterns, then we cannot fully trust our confidence intervals and p-values above.
+ 
+```{r, fig.cap = "Figure 5. Histogram of residuals for statistical model.", fig.align = "center"}
+residuals <- rstandard(math_model)
+movies_data <- cbind(movies_data,residuals)
+ggplot(movies_data, aes(x = residuals)) +
+  geom_histogram() + labs(x="Residual")
+```
+
+```{r, fig.cap = "Figure 6. Scatterplots of residuals against the rotten tomatoes variable.", fig.align = "center"}
+ggplot(movies_data, aes(x=rotten_tomatoes, y=residuals)) +
+  geom_jitter()  +
+  geom_smooth(method = "lm", se = FALSE ) + 
+  labs(x="Rotten Tomatoes(%)", y="Residual")
+```
+
+```{r, fig.cap = "Figure 7. Scatterplots of residuals against the fitted values.", fig.align = "center"}
+fitted_values <- fitted(math_model)
+ggplot(movies_data, aes(x=fitted_values, y=residuals)) +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE ) +
+  labs(x="Fitted Values", y="Residual")
+```
+
+```{r, fig.cap = "Figure 8. Boxplot of residuals for each genre.", fig.align = "center"}
+coefficients <- coef(lm(residuals ~ genre, data = movies_data))
+ggplot(movies_data, aes(x=genre, y=residuals)) +
+  geom_boxplot() +
+  geom_abline(intercept = coefficients[1], slope = coefficients[2]) +
+  labs(x="Genre", y="Residual")
+```
+
+The model residuals look normally distributed, but have two potential outliers(Fig. 5). Figure 6 does not seem to have any significant issues or systematic patterns. There is a decreasing trend in figure 7 that makes some points towards the right end to become less close to 0, violating constant variance assumption and making it less accurate to predict majority of values with the model, due to also outliers. There is, however, two clear outliers around 67% in Figure 6 and at a very high mean Profitability in Figure 7. The boxplots show somewhat a similar spread of residuals at each genre, and roughly similar values across the different genres except for horror genre. However, there is again, two particularly extreme outliers in the horror genre (Fig. 8). We conclude that majority of the assumptions for inference in multiple linear regression are well met. However, it might be worthwhile to look at whether the outlier with the very high scoring horror genre had a very large influence on the conclusions, as our claim would be that without the outliers the model would become more accurate. 
+
+***
+
+
+
+# 4. Discussion 
+
+## 4.1 Conclusions
+
+We found out that there is a relationship between the rotten tomatoes ratings and Profitability at the population level. On average for  every 6 points increase in rotten tomato rating the profitability rose by 1. This doesn't mean that a higher rotten tomatoes rating causes an increase in profitability, but rotten tomatoes and the genre did have a significant effect.
+
+Overall these suggests that a movies rotten tomatoes score is a factor in determining the profitability of a movie. The movies in 2011 have gotten higher rotten tomatoes ratings that roughly increase the chances of getting higher profitability. This findings can only be generalized to Hollywood movies in 2011. 
+
+## 4.2 Limitations
+
+One of the limitations of our dataset is that it contains movies from only 2011 which prevents us from being able to estimate the profitability of movies right now because it not only from over 11 years ago but also taken from a single year and not taken from different years, therefore only being representative for movies in year 2011. Another thing is that 3 observations out of 142 observations were filtered out because of missing values. We observe in our study that only the profitability of Horror movies is statistically significant. However, there are two observed outliers in horror movies and because of that, it is possible that our findings are not representative to all the Horror movies in this sample.
+
+## 4.3 Further questions
+
+If we were to continue researching this subject, we would like to incorporate other various genres as well and ratings from several different platforms rather than only rotten tomatoes ratings. This would ideally provide us with a better and broader understanding of how ratings affect profitability.
+
+We would also like to incorporate data from previous years and more current data to determine if the pattern observed is consistent from year to year. Furthermore, we'd like to know if the release dates affect the rating and, thus, the profitability.
+
+
+
+
+
+
+# 5. Author Statement
+
+## Individual Roles
+
+_Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase_ 
+
+All group members contributed equally to this submission. 
+
+* \[Redacted] acted as the  as the facilitator. 
+* \[Redacted] acted as the Recorder. 
+* \[Redacted] acted as the Reporter. 
+* \[Redacted] acted as the Time Keeper.
+* \[Redacted] acted as the Checker. 
+
+
+## Individual Contribution
+
+_If your group were to earn 5 points on this submission, how should those points be shared across your group members?_
+
+
+* \[Redacted]:  1 points.
+* \[Redacted]: 1 points.
+* \[Redacted]:  1 points.
+* \[Redacted]: 1 points.
+* \[Redacted]: 1 points.
+
+
+
+***
+
+
+# 6. Citations and References {-}
+
+
+

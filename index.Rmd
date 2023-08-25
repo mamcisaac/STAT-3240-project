@@ -24,9 +24,9 @@ library(knitr)
 
 # Don't repeat yourself!
 hint_1 <- "This is the phase of the project that is the least straightforward. Thus, we recommend you start early and get help during office hours and via Piazza early and often."
-hint_2 <- "This phase may require revisions to your original choice of data and visits to office hours or the help center for help with data wrangling."
+hint_2 <- "This phase may require revisions to your original choice of data and visits to office hours or the help center or Piazza for help with data wrangling."
 only_group_leader <- "Only one group member will make a single submission on behalf of the whole group. They will submit:"
-submission_will_differ <- "(Note that your data proposal will likely differ slightly from this one)"
+submission_will_differ <- "(Note that your submission will likely differ slightly)"
 ```
 
 ***
@@ -36,7 +36,7 @@ submission_will_differ <- "(Note that your data proposal will likely differ slig
 
 # Instructions {-}
 
-Everything in this course builds up to the term group project, where there is
+Everything in this course builds up to the term-long group project, where there is
 only one learning goal: *Engage in the data/science research pipeline in as
 faithful a manner as possible while maintaining a level suitable for novices.*
 
@@ -46,12 +46,23 @@ include_graphics("static/images/data_science_pipeline.png")
 
 In order to break down the task and minimize end-of-semester stress, you'll be working on the project in five phases:
 
-1. **Project groups:** Form groups.
-1. **Project data:** Propose a data set for your project. `r hint_1`. After you submit your data proposal, you will get instructor feedback that you should incorporate in your project proposal.
-1. **Project proposal:** Ensure you can work with your data in R by performing an exploratory data analysis. `r hint_2` After you submit your project proposal, you will get  instructor feedback that you should incorporate in your initial project submission. 
-1. **Initial project submission:** Make an initial submission of your project. You will skip some of the sections for now and only complete them after we have covered inference for regression in class. After you submit your work, you will get instructor feedback that you should incorporate in your final report. 
-1. **Final project submission:** Incorporate your feedback from the initial project submission phase, complete the remaining sections, and resubmit your project. The majority of your grade will come from this final project submission.
+1. [**Project groups:**](#groups) Form groups.
+1. [**Project data:**](#data) Propose a data set for your project. `r hint_1`. After you submit your data proposal, you will get feedback that you should incorporate in your project proposal.
+1. [**Project proposal:**](#proposal) Ensure you can work with your data in R by performing an exploratory data analysis. `r hint_2` After you submit your project proposal, you will get  feedback that you should incorporate in your initial project submission. 
+1. [**Initial project submission:**](#submission) Make an initial submission of your project. You will skip some of the sections for now and only complete them after we have covered inference for regression in class. After you submit your work, you will get feedback that you should incorporate in your final report. 
+1. [**Final project submission:**](#resubmission) Incorporate your feedback from the initial project submission phase, complete the remaining sections, and resubmit your project. The majority of your grade will come from this final project submission.
 
+During each Project Phase, each student should take on a specific role within the group:
+
+* Facilitator -- Keeps group on task and verifies that all contribute. Makes the submission on behalf of the group. 
+* Recorder -- Takes notes on important thoughts expressed in the group. 
+* Reporter -- Leads the actual writing of the report.
+* Time Keeper -- Monitors time and planning. Monitors if the project is on track. Ensures the work is submitted on time.
+* Checker -- Checks for accuracy and clarity of thinking during discussions. Checks written work and tracks points. Ensures the work is submitted on time.
+
+You should take on a different role for each Project Phase.
+
+With each submission, your group will need to report which student completed each role, and your group will report on how much each student contributed. If a particular student contributes less, then they will receive fewer marks. If some group members contribute more, then their grades will be increased correspondingly. 
 
 <!-- This term project instructions and samples are modified from [ModernDive Labs](https://moderndive.com). -->
 
@@ -61,12 +72,17 @@ In order to break down the task and minimize end-of-semester stress, you'll be w
 
 # Project Groups {#groups}
 
-1. Complete the Team Formation Survey. 
-    + The groups will be selected to balance characteristics across groups. 
-    + Students who do not complete the survey by the deadline will be placed in groups together, so that more engaged students are less likely to be saddled with group members who cannot meet deadlines.
-    + You will work in this same group for in-class activities (*Team-based learning*).
-    + All groups members are expected to contribute and you will all be held accountable for your contributions in peer evaluations.
-1. Assign a "team/group leader" who will have a few extra administrative duties at each phase. Ex: making submissions, filling out Google Forms, etc.
+For this Project Phase Submission, you must select a group. You will work with this group throughout the course to complete the Term Project. 
+
+To accomplish this, you must use the "Select Project Groups" group self-selection activity on our Moodle page
+
+* Groups should have 5 members each. 
+* You should form groups with students from your own course Section (sometimes class time will be dedicated to group work).
+* Students who do not join a group by the deadline will be placed in groups together, so that more engaged students are less likely to be saddled with group members who cannot meet deadlines.
+* All groups members are expected to contribute and your grade will be depend on your group's assessment of your individual contributions.
+* If you are looking for a group to join, use the "Search for Teammates!" post on Piazza. 
+
+
 
 
 ***
@@ -75,17 +91,38 @@ In order to break down the task and minimize end-of-semester stress, you'll be w
 
 # Project Data {#data} 
 
+For the Project Data Submission, you must find and summarize the data that your group plans to use for the remainder of the Term Project.
+
 **`r hint_1`**
 
-* Get a sense for the requirements of this project phase by reading a possible [example data proposal](static/term_project/data_example.html){target="_blank"} `r submission_will_differ`: 
-* Download the following <a href="static/term_project/data.Rmd" download>`data.Rmd`</a> template R Markdown file and fill it in. 
+
+You can get a sense for the requirements of this project phase by reading some example data proposals `r submission_will_differ`:
+
+* [Example project data submission 1](static/term_project/data_example.html){target="_blank"}
+* [Example project data submission 2](static/term_project/data_example_01.html){target="_blank"}
+* [Example project data submission 3](static/term_project/data_example_02.html){target="_blank"}
 
 
-## Find data
+## What to submit
+
+You must download the following <a href="static/term_project/data.Rmd" download>`data.Rmd`</a> template R Markdown file and complete it for your chosen data set.
+
+`r only_group_leader`
+
+1. The completed `data.Rmd` R Markdown file
+1. The corresponding `data.html` HTML report file
+1. If your data is not confidential or sensitive in nature, then publish your data as a CSV file on Google Sheets --  you can do this by following the 6 steps in [this Twitter thread](https://t.co/CeM3IIemFU) (or see [this screenshot of the thread](static/images/Uploading_csv.png)). That way your group can all access a single copy of your data on the web. If your data is confidential or sensitive in nature, do not publish it on the web, but rather submit the Excel or CSV file as well.
+
+
+
+
+## Data Requirements
+
+Find a data set that fits the following specifications. Note your data may need a little wrangling from its original form.
 
 ### Specifications {-}
 
-Find a data set that fits these specifications. Note your data may need a little wrangling from its original form.
+Your data must contain
 
 1. (If available) An [identification variable](https://moderndive.com/1-getting-started.html#identification-vs-measurement-variables){target="_blank"} that uniquely identifies each observation in each row. 
 1. A numerical outcome variable $y$. Note: binary outcomes variables with 0/1 values are not technically numerical.
@@ -126,29 +163,13 @@ Here are some possible data sources:
     + Any data from the data journalism website FiveThirtyEight.com
 -->
 
-### Note on data confidentiallity {-}
-
-If your data is not confidential or sensitive in nature, then publish your data as a CSV file on Google Sheets. That way your group can all access a single copy of your data on the web. If your data is confidential or sensitive in nature, **do not** publish it on the web, but rather submit the Excel or CSV file as well.
-
-You can publish your data as a CSV file on Google Sheets by following the 6 steps in this Twitter thread:
-
-<blockquote class="twitter-tweet"><p lang="en" dir="ltr">2. Go to File -&gt; Publish to the web ... <a href="https://t.co/CeM3IIemFU">pic.twitter.com/CeM3IIemFU</a></p>&mdash; Albert Y. Kim (@rudeboybert) <a href="https://twitter.com/rudeboybert/status/1055821837551235073?ref_src=twsrc%5Etfw">October 26, 2018</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-## What to submit
-
-`r only_group_leader`
-
-1. The `data.Rmd` R Markdown file
-1. The `data.html` HTML report file
-1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
 
 
 ## Hints
 
 * **Where is this heading?**: For the next project phase (project proposal), you will be making a visualization like this [one](static/term_project/proposal_example.html#colored-scatterplot){target="_blank"}. If you can make a visualization like this one, then your data is set for the rest of the project.
 * When you have questions:
-    + Please ask questions that you think the entire class would like to know the answer to in the `project` folder on Piazza; if necessary, you can make the post private. 
+    * Please ask questions that you think the entire class would like to know the answer to in the `project` folder on Piazza; if necessary, you can make the post private. 
 * Only minimal data wrangling using the `dplyr` package is expected at this time; you will be doing more for the "project proposal" phase coming up. That being said, feel free to experiment!
 
 
@@ -165,13 +186,35 @@ You can publish your data as a CSV file on Google Sheets by following the 6 step
 
 # Project Proposal {#proposal}
 
+For the Project Proposal Submission, you must dig a little deeper into your chosen data and propose a more concrete plan for the remainder of the Term Project.
+
+
 **`r hint_2`**
 
-* Get a sense for the requirements of this project phase by reading a possible [example project proposal](static/term_project/proposal_example.html){target="_blank"} `r submission_will_differ`: 
-* Download the following <a href="static/term_project/proposal.Rmd" download>`proposal.Rmd`</a> template R Markdown file and start filling it in. 
+You can get a sense for the requirements of this project phase by reading some example project proposals `r submission_will_differ`:
+
+* [Example project propsal submission 1](static/term_project/proposal_example.html){target="_blank"}
+* [Example project propsal submission 2](static/term_project/proposal_example_01.html){target="_blank"}
+* [Example project propsal submission 3](static/term_project/proposal_example_02.html){target="_blank"}
 
 
-## Work on your proposal
+## What to submit
+
+You must download the following  <a href="static/term_project/proposal.Rmd" download>`proposal.Rmd`</a> template R Markdown file and complete it.
+
+`r only_group_leader`
+
+
+1. The completed `proposal.Rmd` R Markdown file
+1. The corresponding `proposal.html` HTML report file
+1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
+
+
+
+
+
+
+## Hints
 
 Your data may require some wrangling to get it in the appropriate format. Given that this is not a class where data wrangling is a central focus, we suggest you check out the following resources:
 
@@ -184,15 +227,6 @@ include_graphics("static/images/data_wrangling.png")
 
 3. Post your question in Piazza.
 
-
-## What to submit
-
-`r only_group_leader`
-
-1. The `proposal.Rmd` R Markdown file
-1. The `proposal.html` HTML report file
-1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
-
 * Be sure to incorporate any feedback given to you from the data proposal phase.
 
 
@@ -203,33 +237,37 @@ include_graphics("static/images/data_wrangling.png")
 
 # Initial Project Submission {#submission}
 
-* Get a sense for the requirements of this project phase by reading only the following sections of this possible [final project submission](static/term_project/submission_example.html){target="_blank"} `r submission_will_differ`: 
-    + Section 1: Introduction
-    + Section 2: Exploratory data analysis
-    + Section 3 subsections 3.1, 3.2, and 3.3: Multiple linear regression: Methods, Model Results, Interpreting the regression table.    
-* Download the following <a href="static/term_project/submission_example.Rmd" download>`project_submission_example.Rmd`</a> sample R Markdown file and start filling it in for your project.
+For the Initial Project Submission, you must complete the following sections of your `project_submission.Rmd` file:
+
+* Section 1: Introduction
+* Section 2: Exploratory data analysis
+* Section 3 subsections 3.1, 3.2, and 3.3: Multiple linear regression: Methods, Model Results, Interpreting the regression table.
+* Section 5: Author Statement
+
+Do not complete the following sections (you'll be doing this at the final submission phase):
+
+* Section 3 subsections 3.4, 3.5: Inference for multiple regression
+* Section 4: Discussion. You will write this conclusion based on the results of sections 3.4 and 3.5.
+
+You can get a sense for the requirements of this project phase by reading some example initial project submissions `r submission_will_differ`:
+
+* [Example initial project submission 1](static/term_project/submission_example.html){target="_blank"}
+* [Example initial project submission 2](static/term_project/submission_example_01.html){target="_blank"}
+* [Example initial project submission 3](static/term_project/submission_example_02.html){target="_blank"}
 
 
-## Complete your initial submission
 
-* Incorporate any feedback given to you from the proposal phase.
-* Complete the following sections of your `project_submission.Rmd` file:
-    + Section 1: Introduction
-    + Section 2: Exploratory data analysis
-    + Section 3 subsections 3.1, 3.2, and 3.3: Multiple linear regression: Methods, Model Results, Interpreting the regression table.
-* Do not complete the following sections (you'll be doing this at the final submission phase):
-    + Section 3 subsections 3.4, 3.5: Inference for multiple regression
-    + Section 4: Discussion. You will write this conclusion based on the results of sections 3.4 and 3.5.
-        
-        
-## What to submit 
+## What to submit
+
+You must download the following <a href="static/term_project/submission.Rmd" download>`project_submission.Rmd`</a> template R Markdown file and fill it in for your project.
 
 `r only_group_leader`
 
-1. The `project_submission.Rmd` R Markdown file with sections 1, 2, 3.1, 3.2, and 3.3 completed
-1. The `project_submission.html` HTML report file.
+1. The `project_submission.Rmd` R Markdown file with sections 1, 2, 3.1, 3.2, 3.3, and 5 completed
+1. The corresponding `project_submission.html` HTML report file.
 1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
 
+* Remember to incorporate any feedback given to you from the proposal phase.
 
 
 ***
@@ -238,27 +276,33 @@ include_graphics("static/images/data_wrangling.png")
 
 # Final Project Submission {#resubmission}
 
-Get a sense for the requirements of this project phase by re-reading all the sections of the possible [final project submission](static/term_project/resubmission_example.html){target="_blank"} from the previous submission phase. In particular, read the following new sections:
+For the Final Project Submission, you must revise and extend your initial submission. This submission will be worth the majority of the marks for your Term Project and should demonstrate your learning from throughout the course.
 
-* Sections 3.4, 3.5: Inference for multiple regression
-* Section 4: Discussion.
-
-
-## Revise your initial submission
-
-Using the same `project_submission.Rmd` file you submitted for the project submission phase:
+You will use the same `project_submission.Rmd` file you submitted for the project submission phase, and should
 
 * Incorporate any feedback given to you from the project submission phase.
 * Complete Sections 3.4 and 3.5: Inference for multiple regression
 * Complete Section 4: Discussion. You will write this conclusion based on the results of sections 3.4 and 3.5.
 
 
-## What to submit    
-    
+You can get a sense for the requirements of this project phase by reading some example final project submissions `r submission_will_differ`:
+
+* [Example initial project submission 1](static/term_project/resubmission_example.html){target="_blank"}
+* [Example initial project submission 2](static/term_project/resubmission_example_01.html){target="_blank"}
+* [Example initial project submission 3](static/term_project/resubmission_example_02.html){target="_blank"}
+
+In particular, be sure to read the following new sections:
+
+* Sections 3.4, 3.5: Inference for multiple regression
+* Section 4: Discussion.
+
+
+## What to submit
+
 `r only_group_leader`
 
 1. The updated `project_submission.Rmd` R Markdown file.
-1. The updated `project_submission.html` HTML report file.
+1. The corresponding `project_submission.html` HTML report file.
 1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
 
 
@@ -267,4 +311,4 @@ Using the same `project_submission.Rmd` file you submitted for the project submi
 
 # Peer Evaluations
 
-Remember that you will all be held accountable for your contributions in peer evaluations; you will submit your project as a group, but you will receive an individual grade based on your contributions as well as the quality of your group's work. 
+Remember that you will all be held accountable for your individual contributions to the group project; you will submit your project as a group, but you will receive an individual grade based on your contributions as well as the quality of your group's work. 

@@ -1,7 +1,7 @@
 
 ---
 title: "STAT 1910 Project Proposal Example"
-author: "Michael McIsaac, Alexis Cohen, Andrianne Dao, Isabel Gomez, Jenny Smetzer, and Albert Y. Kim"
+author: "Alexis Cohen, Andrianne Dao, Isabel Gomez, Jenny Smetzer, and Albert Y. Kim"
 date: "Last updated on `r Sys.Date()`"
 output:
   html_document:
@@ -212,4 +212,33 @@ ggplot(ma_schools, aes(x = percent_economically_disadvantaged, y = average_sat_m
 ```
 
 The negative relationship between average math SAT scores and percent of economically disadvanted students across all high schools in MA we observed earlier seems to hold even when distinguishing between schools of different size using colors. There does not appear to be an interaction effect as all three slopes seem roughly equal.
+
+
+
+# Author Statement
+
+## Individual Roles
+
+_Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase_ 
+
+Albert Y. Kim did not contribute to this phase of the project submission; he didn't show up to any meetings or participate.
+
+The rest of the group worked well together and contributed fairly equally, with Alexis Cohen and Andrianne Dao taking on a little more responsibility.
+
+* Andrianne Dao acted as the  as the facilitator. 
+* Isabel Gomez acted as the Recorder. 
+* Jenny Smetzer acted as the Reporter. 
+* Alexis Cohen acted as both the Time Keeper and Checker. 
+
+
+## Individual Contribution
+
+_If your group were to earn 5 points on this submission, how should those points be shared across your group members?_
+
+
+* Albert Y. Kim: 0 points.
+* Alexis Cohen:  1.5 points.
+* Andrianne Dao: 1.5 points.
+* Isabel Gomez:  1 point.
+* Jenny Smetzer: 1 point.
 

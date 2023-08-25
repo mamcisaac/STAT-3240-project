@@ -238,9 +238,27 @@ $$
 
 
 
+*** 
+
+
+
+# 5. Author Statement
+
+## Individual Roles
+
+_Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase_ 
+
+
+## Individual Contribution
+
+_If your group were to earn 5 points on this submission, how should those points be shared across your group members?_
+
+
 
 ***
 
 
-# 5. Citations and References {-}
+# 6. Citations and References {-}
+
+
 

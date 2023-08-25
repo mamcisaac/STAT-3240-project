@@ -1,0 +1,223 @@
+
+---
+title: "STAT 1910 Project Proposal"
+author: "Group 11:  [individual student names redacted]"
+date: "Last updated on [date redacted]"
+output:
+  html_document:
+    fig_caption: yes
+    theme: lumen
+    toc: yes
+    toc_depth: 2
+    df_print: kable
+    toc_float:
+      collapsed: no
+---
+
+```{r, message=FALSE}
+# Load all packages here:
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(janitor)
+
+# Set seed value of random number generator to get "replicable" random numbers.
+# The choice of seed value of 76 was an arbitrary one on my part.
+set.seed(76)
+```
+
+
+# Data
+
+## Load data into R
+
+_Include the code to load your data here. If your data is not confidential nor is it private in nature, consider publishing it as a `.csv` file on Google Sheets as in the code chunk below; instructions on how to do this are in Steps 1-6 [here](https://twitter.com/rudeboybert/status/1055821846539591680). If the data shouldn't be published online, then please submit the spreadsheet file on Moodle._
+
+```{r, message=FALSE}
+distance <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQ7V6MMGfwSXCfRXCvD2FYOqOPMXn_7XOP-IrwgGbwbcF9BhPDyof15HvxzKfPYS0JLR1QRXVCASbbi/pub?output=csv")
+```
+
+## Clean variable names
+
+_Pipe your data frame into the `clean_names()` function from the `janitor` package. Then be sure to overwrite the original data frame with this new data frame using the `<-` assignment operator. This will clean your variable names, making them easier to work with._
+
+```{r}
+distance <- distance %>% 
+  clean_names()
+glimpse(distance)
+```
+
+## Data wrangling
+
+_Complete your data wrangling here_: 
+
+Our categorical variable was labelled 1 to 4, where the number 1 equaled less than 15 minutes of travel time, and 4 equaled more than an hour of travel time. Likewise, we found no need to limit our analysis as the more students we have; we can make better comparisons.
+```{r}
+
+distance <- distance %>%
+  mutate(traveltime = recode_factor(traveltime, 
+                                     "1" = "< 15 mins", 
+                                     "2" = "15~30 mins", 
+                                     "3" = "30 mins ~ 1 hour",
+                                     "4" = "> 1 hour"))
+```
+
+
+
+***
+
+
+# Preview of data
+
+## Pare down variables
+
+_`select()` the following variables **in this order** and drop all others. Eliminating all unnecessary variables will making visually exploring the raw values less taxing mentally, as we'll have less data to look at._
+
+1. _First: The identification variable (if any)_
+1. _Second: The outcome variable $y$_
+1. _Third: The numerical explanatory variable_
+1. _Fourth: The categorical explanatory variable_
+1. _Rest: any other variable you find interesting_
+
+```{r}
+distance <- distance %>% 
+  select(final_math_grade, absences, traveltime )
+```
+
+## Look at your data using glimpse
+
+_Look at your data using the `glimpse()` function._
+
+```{r}
+glimpse(distance)
+```
+
+## Show a preview of your data
+
+_Look at your data another way by displaying a random sample of 5 rows of your data frame by piping it into the `sample_n(5)` function from the `dplyr` package._
+
+```{r}
+distance %>% 
+  sample_n(5)
+```
+
+
+
+***
+
+
+
+# Exploratory data analysis
+
+_Let's do an little exploratory data analysis._
+
+## Inspect for missing values
+
+_Address missing values._
+We see that there are no missing values within the dataframe.
+
+```{r}
+colSums(is.na(distance))
+
+
+
+```
+
+
+## Summary statistics
+
+_Compute some quick summary statistics of the outcome variable and comment._
+
+```{r}
+distance %>% 
+  group_by(traveltime) %>% 
+  summarize(n = n(), 
+            correlation = cor(final_math_grade , absences  ),
+            mean = mean(final_math_grade , na.rm = TRUE), 
+            median = median(final_math_grade , na.rm = TRUE), 
+            sd = sd(final_math_grade , na.rm = TRUE))
+```
+As shown above, we can see that the  GP school's most common travel time for students appears to be < 15 minutes, yet this variable is the least correlated value of all four categories. We noticed the strongest correlation among students with a travel time of >1h, which was the category with the lowest amount of students. Thus, as the travel time to get to school increases, we see a weak positive correlation between their absences and final maths grade. 
+
+## Histogram of outcome variable 
+
+_Visualize the distribution of the outcome variable using a histogram and comment._
+
+```{r, fig.cap = "Figure 1. Historgram of Math Grades", fig.align = "center", fig.width=16/2, fig.height=9/2}
+ggplot(distance, aes(x = final_math_grade)) +
+  geom_histogram(binwidth = 2, color = "white", fill = "steelblue") +
+  labs(x = "Final Math Grade", y = "Number of Students with the Grade") 
+
+```
+Though there is an outlier of grade 0, which might suggest the right skewness, the data appears symmetrical/bell-shaped. 
+
+
+
+## Scatterplot 
+
+_Visualize the relationship of the outcome variable and the numerical explanatory variable using a scatterplot and comment._
+
+```{r, fig.cap = "Figure 2. School Absences compared to Math Grades", fig.align = "center", fig.width=16/2, fig.height=9/2}
+ggplot(distance, aes(x = absences, y = final_math_grade ))+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE ) +
+  labs(y = "Final Math Grade", 
+       x = "Number of School Absences")
+
+```
+Based on our scatter plot, we observed that there seems to be a relationship between the number of school absences and final math grades. Although, we would state that it is a very weak positive correlation with a (slightly) positive line of best fit. Initially, we assumed there would be no relationship as the points on the scatter plot seem to be scattered randomly on the left side of the plot. Likewise, there's weak to little association between these two variables. 
+
+## Boxplot
+
+_Visualize the relationship of the outcome variable and the categorical explanatory variable using a scatterplot and comment._
+
+```{r, fig.cap = "Figure 3. Boxplot of Travel Time compared to Math Grade", fig.align = "center", fig.width=16/2, fig.height=9/2}
+ggplot(distance, aes(x = traveltime, y = final_math_grade, fill = traveltime)) +
+  geom_boxplot() +
+  labs(y = "Final Math Grade", x = "Home to School Travel Time")
+```
+The Final math grade seemed to be the highest in the group of students with the lowest travel time and the lowest within the group with the highest travel time. Most box plots had an outlier(Grade 0), but the box plot students with the highest travel time had more outliers.  
+
+
+## Colored scatterplot
+
+_Visualize the relationship of the outcome variable and both explanatory variables using a colored scatterplot and comment._
+
+```{r, fig.cap = "Figure 4. Colored Scatterplot of Math Grades compared to Absences", fig.align = "center", fig.width=16/2, fig.height=9/2}
+ggplot(distance, aes(x = absences, y = final_math_grade, color = traveltime))+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE ) +
+  labs(y = "Final Math Grade", x = "Number of School Absences")
+```
+The coloured scatter plot reveals the differences in correlations between the categories and allows the viewer to visualize the differences in sample sizes. Despite low correlation values, all lines appear positive, implying a positive relationship. There seems to be some interaction between the categories, and all four categories seem to vary slightly in their slopes
+
+
+
+# Author Statement
+
+## Individual Roles
+
+_Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase_ 
+
+All group members contributed equally to this submission. 
+
+* \[Redacted] acted as the  as the facilitator. 
+* \[Redacted] acted as the Recorder. 
+* \[Redacted] acted as the Reporter. 
+* \[Redacted] acted as the Time Keeper.
+* \[Redacted] acted as the Checker. 
+
+
+## Individual Contribution
+
+_If your group were to earn 5 points on this submission, how should those points be shared across your group members?_
+
+
+* \[Redacted]:  1 points.
+* \[Redacted]: 1 points.
+* \[Redacted]:  1 points.
+* \[Redacted]: 1 points.
+* \[Redacted]: 1 points.
+
+
+

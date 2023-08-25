@@ -1,0 +1,115 @@
+---
+title: "STAT 1910 Project Data Proposal - Diamonds Dataset"
+author: "Team 04: [individual student names redacted]"
+date: "Last updated on [date redacted]"
+output:
+  html_document:
+    fig_caption: yes
+    theme: lumen
+    toc: yes
+    toc_depth: 2
+    df_print: kable
+    toc_float:
+      collapsed: no
+---
+
+# Setup
+
+## Load packages
+
+```{r, message=FALSE}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(janitor)
+```
+
+## Set seed value
+
+Our choice of seed value is 42 - "The answer to life, the universe, and everything" - [*Douglas Adams' The Hitchhiker's Guide to the Galaxy*](https://www.techtarget.com/whatis/definition/42-h2g2-meaning-of-life-The-Hitchhikers-Guide-to-the-Galaxy)
+
+```{r message=FALSE}
+set.seed(42)
+```
+
+# Big-picture
+
+## Research question
+
+In this project, we are trying to understand what attributes of diamonds influence their price the most.
+
+## Description of data
+
+This data set contains the prices and other attributes of 53,940 diamonds. The data was originally downloaded from Kaggle [here](https://www.kaggle.com/datasets/shivam2503/diamonds) and was modified to include `id` column.
+
+## Load data into R
+
+```{r, message=FALSE}
+diamonds <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vQdSy4ef3CfFtHvj7BjzMHNXhLdpFwaRBgBGc6was-iiM4F0ILQQolGeUBnip9K71novyrNuV3bGaVh/pub?gid=1644666616&single=true&output=csv")
+```
+
+## Clean variable names
+
+```{r}
+diamonds <- clean_names(diamonds)
+```
+
+## Explore your data
+
+```{r, eval = FALSE}
+glimpse(diamonds)
+```
+
+------------------------------------------------------------------------
+
+# Variables
+
+## Identification variable
+
+Our identification variable is `id`. Which is just the id number of each diamond recorded.
+
+## Outcome variable
+
+Our outcome (response/dependent) variable is the `price` of the diamond in US dollars (\$326 -- \$18,823).
+
+## Numerical explanatory variable
+
+Our numerical explanatory variable is `carat` which represents the weight of the diamond in carats (0.2 - 5.01).
+
+## Categorical explanatory variable
+
+Our categorical explanatory variable is `cut` which is the quality of the cut. It has 5 levels (Fair, Good, Very Good, Premium, Ideal).
+
+------------------------------------------------------------------------
+
+# Rows/observations
+
+## Observational units
+
+Each row represents a unique diamond.
+
+## Sample size
+
+There are 53,940 rows (diamonds) in the data set.
+
+------------------------------------------------------------------------
+
+# Preview of data
+
+## Pare down variables
+
+1.  *The identification variable* $id$
+2.  *The outcome variable* $price$
+3.  *The numerical explanatory variable* $carat$
+4.  *The categorical explanatory variable* $cut$
+
+```{r}
+diamonds <- diamonds %>%
+  select(id, price, carat, cut)
+```
+
+## Preview data
+
+```{r}
+sample_n(diamonds, 5)
+```

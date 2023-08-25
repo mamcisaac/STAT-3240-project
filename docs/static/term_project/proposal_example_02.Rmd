@@ -1,0 +1,244 @@
+
+---
+title: "STAT 1910 Project Proposal"
+author: "Team 07:  [individual student names redacted]"
+date: "Last updated on [date redacted]"
+output:
+  html_document:
+    fig_caption: yes
+    theme: lumen
+    toc: yes
+    toc_depth: 2
+    df_print: kable
+    toc_float:
+      collapsed: no
+---
+
+```{r, message=FALSE}
+# Load all packages here:
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(janitor)
+
+# Set seed value of random number generator to get "replicable" random numbers.
+# The choice of seed value of 76 was an arbitrary one on my part.
+set.seed(76)
+```
+
+
+# Data
+
+## Load data into R
+
+_Include the code to load your data here. If your data is not confidential nor is it private in nature, consider publishing it as a `.csv` file on Google Sheets as in the code chunk below; instructions on how to do this are in Steps 1-6 [here](https://twitter.com/rudeboybert/status/1055821846539591680). If the data shouldn't be published online, then please submit the spreadsheet file on Moodle._
+
+```{r, message=FALSE}
+movies_data <- read_csv("https://docs.google.com/spreadsheets/d/e/2PACX-1vT-DqFII3DOoUeCKuVe-gZASgKWJPgM7JnHhhUUGgcXpdLjx4KmYnUZiR1kQ0mjOg/pub?gid=1286148029&single=true&output=csv")
+```
+
+## Clean variable names
+
+_Pipe your data frame into the `clean_names()` function from the `janitor` package. Then be sure to overwrite the original data frame with this new data frame using the `<-` assignment operator. This will clean your variable names, making them easier to work with._
+
+```{r}
+movies_data <- movies_data %>% clean_names()
+```
+
+## Data wrangling
+
+_Complete your data wrangling here_:
+
+We had to remove the first row of the data set because it displayed only the units of measurement of the columns.
+
+We made the variable "genre" to contain only 5 levels of categorical values instead of 10 levels of categorical values.
+
+We had to remove the percentage sign from the values under the "probability" variable and convert the values of "probability" and "rotten tomatoes" variables from string to numerical to conduct exploratory analysis.
+
+```{r}
+# This removes the first row of the data set. 
+movies_data <- movies_data[-1,]
+
+# This code makes some categorical levels be renamed under one categorical level called "Other".
+movies_data$genre <- recode(movies_data$genre, Fantasy = "Other", Adventure = "Other", Romance = "Other", Animation = "Other", Thriller = "Other")
+
+# These two lines of code removes the percentage sign from the values and convert them into a numerical value.
+movies_data <- movies_data %>% mutate(profitability = parse_number(profitability))
+movies_data <- movies_data %>% mutate(rotten_tomatoes = parse_number(rotten_tomatoes))
+```
+
+
+
+***
+
+
+# Preview of data
+
+## Pare down variables
+
+_`select()` the following variables **in this order** and drop all others. Eliminating all unnecessary variables will making visually exploring the raw values less taxing mentally, as we'll have less data to look at._
+
+1. _First: The identification variable (if any)_
+1. _Second: The outcome variable $y$_
+1. _Third: The numerical explanatory variable_
+1. _Fourth: The categorical explanatory variable_
+1. _Rest: any other variable you find interesting_
+
+```{r}
+movies_data <- movies_data %>% select(film, profitability, rotten_tomatoes, genre, lead_studio)
+```
+
+## Look at your data using glimpse
+
+_Look at your data using the `glimpse()` function._
+
+```{r}
+glimpse(movies_data)
+```
+
+## Show a preview of your data
+
+_Look at your data another way by displaying a random sample of 5 rows of your data frame by piping it into the `sample_n(5)` function from the `dplyr` package._
+
+```{r}
+movies_data %>% sample_n(5)
+```
+
+
+
+***
+
+
+
+# Exploratory data analysis
+
+_Let's do an little exploratory data analysis._
+
+## Inspect for missing values
+
+_Address missing values._
+
+These were the observations, where there were no information available in its columns like "profitability", "genre", "rotten_tomatoes", and "lead_studio". The observation that can be identified as "Average" in the "film" category, is not a film but the row used to calculate the average of the numerical variables. This observation was not useful as it only partly collected average values of the whole data set and was placed in between categorical values which could be easily misunderstood.
+
+```{r}
+colSums(is.na(movies_data))
+movies_data %>% filter(is.na(profitability))
+movies_data %>% filter(is.na(genre))
+movies_data %>% filter(is.na(rotten_tomatoes))
+```
+
+Therefore, those observations had to be ignored for further exploratory and numerical analysis.
+
+```{r}
+movies_data <- movies_data %>% filter(!is.na(profitability))
+movies_data <- movies_data %>% filter(!is.na(genre))
+movies_data <- movies_data %>% filter(!is.na(rotten_tomatoes))
+```
+
+
+## Summary statistics
+
+_Compute some quick summary statistics of the outcome variable and comment._
+
+This data contains horror movies as the most profitable genre. All the genres of movies have a weak positive relationship between profitability and rotten tomatoes ratings of the variables.
+
+```{r}
+movies_data %>% 
+  group_by(genre) %>%
+  summarize(n = n(), 
+            correlation = cor(profitability, rotten_tomatoes),
+            mean = mean(profitability, na.rm = TRUE), 
+            median = median(profitability, na.rm = TRUE), 
+            sd = sd(profitability, na.rm = TRUE))
+```
+
+
+## Histogram of outcome variable 
+
+_Visualize the distribution of the outcome variable using a histogram and comment._
+
+In our histogram, the distribution is right skewed. Most films are having profitability between 0% and approximately 1000 % but there are two outliers with relatively high profitability and they are Paranormal Activity 3 with a profitability of over 4000% and Insidious with over 6000% profitability with both being horror movies.
+
+```{r, fig.cap = "Figure 1. WRITE A TITLE HERE", fig.align = "center", fig.width=16/2, fig.height=9/2}
+
+ggplot(movies_data, aes(x = profitability)) +
+  geom_histogram(bins = 30, color = "white", fill = "steelblue") +
+  labs(x = "Profitability (%)", y = "Number of Films based on the Profitability")
+
+```
+
+
+
+## Scatterplot 
+
+_Visualize the relationship of the outcome variable and the numerical explanatory variable using a scatterplot and comment._
+
+There is slightly positive correlation and linear relationship between profitability and Rotten Tomatoes ratings of movies which means the higher the rotten tomatoes scores of the movie the more likely the movie is to be profitable.
+
+```{r, fig.cap = "Figure 2. WRITE A TITLE HERE", fig.align = "center", fig.width=16/2, fig.height=9/2}
+
+ggplot(movies_data, aes(x = rotten_tomatoes, y = profitability))+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE ) +
+  labs(y = "Profitability (%)", 
+       x = "Rotten Tomatoes (%)")
+
+```
+
+
+## Boxplot
+
+_Visualize the relationship of the outcome variable and the categorical explanatory variable using a scatterplot and comment._
+
+In this distribution our films are grouped based on their genre and profitability is the highest in "Horror" films and the lowest in "Action" films. There are no significant differences between the displayed boxplots but the "Action" boxplot is the only one that does not have an outlier. The genre "Comedy" has the biggest spread while the genre "Action" has the smallest spread.
+
+```{r, fig.cap = "Figure 3. WRITE A TITLE HERE", fig.align = "center", fig.width=16/2, fig.height=9/2}
+
+ggplot(movies_data, aes(x = genre, y = profitability, fill = genre)) +
+  geom_boxplot() +
+  labs(y = "Profitability (%)", x = "Genre")
+
+```
+
+## Colored scatterplot
+
+_Visualize the relationship of the outcome variable and both explanatory variables using a colored scatterplot and comment._
+
+This is the same as the previous scatter plot but now each genre has its own line of best fit and the data points are colored by their genre which is shown in the legend. Based on the genre "Horror", it has the most positive linear relationship which could be due to its  high value outliers. All the other genres have their slopes roughly similar.
+
+```{r, fig.cap = "Figure 4. WRITE A TITLE HERE", fig.align = "center", fig.width=16/2, fig.height=9/2}
+
+ggplot(movies_data, aes(x = rotten_tomatoes, y = profitability, color = genre))+
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE ) +
+  labs(y = "Profitability (%)", x = "Rotten Tomatoes (%)")
+
+```
+
+
+
+# Author Statement
+
+## Individual Roles
+
+_Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase_ 
+
+\[Redacted] did not contribute to this submission. \[Redacted] participated in the first discussions, but made only a small contribution to this project. The other 3 group members contributed equally. 
+
+* \[Redacted] acted as the  as the facilitator. 
+* \[Redacted] acted as the Recorder. 
+* \[Redacted] acted as the Reporter. 
+* \[Redacted] was assigned the role of the Time Keeper.
+* \[Redacted] was assigned the role of the Checker. 
+
+
+## Individual Contribution
+
+_If your group were to earn 5 points on this submission, how should those points be shared across your group members?_
+
+
+* \[Redacted]:  0 points.
+* \[Redacted]:  0.5 points.
+* \[Redacted]: 1.5 points.
+* \[Redacted]: 1.5 points.
+* \[Redacted]: 1.5 points.
