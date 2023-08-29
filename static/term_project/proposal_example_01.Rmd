@@ -1,7 +1,7 @@
 
 ---
-title: "STAT 1910 Project Proposal"
-author: "Group 11:  [individual student names redacted]"
+title: "STAT 3240 Project Proposal"
+author: "[individual student names redacted]"
 date: "Last updated on [date redacted]"
 output:
   html_document:
@@ -26,6 +26,25 @@ library(janitor)
 set.seed(76)
 ```
 
+
+
+# Big-picture
+
+## Research question
+
+_What is your research question?_
+
+
+ As students, we were interested in a topic that pertains to education, and we are all from different backgrounds, which brought up many issues on how race and graduation are linked. Thus, we have decided to determine and comprehend if a student's race affects their graduation and what factors into it. 
+
+
+## Description of data
+
+_Please give a very short description of the data set along with it's original source._
+
+Finding the data was an essential component, as we wanted a city where there are different ethnicities or a town that is known to be very diverse. We chose New York and got the data on high school graduation rates during 2017 from the Department of Education. Also, we focused on the cohort year 2017, which was pretty recent, and the data contains the percentage of dropouts for each Race in that same year. 
+
+The data was downloaded from [New York Department of Education site](https://infohub.nyced.org/reports/academics/graduation-results)
 
 # Data
 
@@ -197,7 +216,7 @@ The coloured scatter plot reveals the differences in correlations between the ca
 
 ## Individual Roles
 
-_Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase_ 
+_Describe the role and level of contribution of each group member during this project phase_ 
 
 All group members contributed equally to this submission. 
 

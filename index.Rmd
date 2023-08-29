@@ -37,20 +37,21 @@ submission_will_differ <- "(Note that your submission will likely differ slightl
 # Instructions {-}
 
 Everything in this course builds up to the term-long group project, where there is
-only one learning goal: *Engage in the data/science research pipeline in as
-faithful a manner as possible while maintaining a level suitable for novices.*
+only one learning goal: *Engage in the data/science research pipeline:*
 
 ```{r, echo=FALSE, out.width="80%"}
 include_graphics("static/images/data_science_pipeline.png")
 ```
 
+Over the course of this project, your group must develop appropriate regression analyses to answer real-world research questions.
+
 In order to break down the task and minimize end-of-semester stress, you'll be working on the project in five phases:
 
 1. [**Project groups:**](#groups) Form groups.
-1. [**Project data:**](#data) Propose a data set for your project. `r hint_1`. After you submit your data proposal, you will get feedback that you should incorporate in your project proposal.
-1. [**Project proposal:**](#proposal) Ensure you can work with your data in R by performing an exploratory data analysis. `r hint_2` After you submit your project proposal, you will get  feedback that you should incorporate in your initial project submission. 
-1. [**Initial project submission:**](#submission) Make an initial submission of your project. You will skip some of the sections for now and only complete them after we have covered inference for regression in class. After you submit your work, you will get feedback that you should incorporate in your final report. 
-1. [**Final project submission:**](#resubmission) Incorporate your feedback from the initial project submission phase, complete the remaining sections, and resubmit your project. The majority of your grade will come from this final project submission.
+1. [**Project proposal:**](#proposal) Propose a data set for your project and perform an exploratory data analysis. This is the phase of the project that is the least straightforward. Thus, we recommend you start early and get help during office hours and via Piazza early and often. After you submit your proposal, you will get instructor feedback that you should incorporate in your project proposal. 
+1. [**Initial submission-video presentation:**](#submission) Make an initial submission of your project (using the material we have covered up to this point in class) in the form of a video presentation created by your group. After you submit your work, you will get peer and instructor feedback that you should incorporate in your final report.
+1. [**Peer review of video presentations:**](#peerreview) You will, individually, offer feedback to your classmates' video submissions. 
+1. [**Final submission-written report:**](#resubmission) Incorporate your feedback from the initial project submission phase, complete the remaining sections, and resubmit your project. The majority of your grade will come from this final project submission.
 
 During each Project Phase, each student should take on a specific role within the group:
 
@@ -64,7 +65,6 @@ You should take on a different role for each Project Phase.
 
 With each submission, your group will need to report which student completed each role, and your group will report on how much each student contributed. If a particular student contributes less, then they will receive fewer marks. If some group members contribute more, then their grades will be increased correspondingly. 
 
-<!-- This term project instructions and samples are modified from [ModernDive Labs](https://moderndive.com). -->
 
 ***
 
@@ -76,9 +76,7 @@ For this Project Phase Submission, you must select a group. You will work with t
 
 To accomplish this, you must use the "Select Project Groups" group self-selection activity on our Moodle page
 
-* Groups should have 5 members each. 
-* You should form groups with students from your own course Section (sometimes class time will be dedicated to group work).
-* Students who do not join a group by the deadline will be placed in groups together, so that more engaged students are less likely to be saddled with group members who cannot meet deadlines.
+* Groups should have 4-5 members each. 
 * All groups members are expected to contribute and your grade will be depend on your group's assessment of your individual contributions.
 * If you are looking for a group to join, use the "Search for Teammates!" post on Piazza. 
 
@@ -89,30 +87,26 @@ To accomplish this, you must use the "Select Project Groups" group self-selectio
 
 
 
-# Project Data {#data} 
+# Project Proposal {#proposal}
 
-For the Project Data Submission, you must find and summarize the data that your group plans to use for the remainder of the Term Project.
-
-**`r hint_1`**
-
-
-You can get a sense for the requirements of this project phase by reading some example data proposals `r submission_will_differ`:
-
-* [Example project data submission 1](static/term_project/data_example.html){target="_blank"}
-* [Example project data submission 2](static/term_project/data_example_01.html){target="_blank"}
-* [Example project data submission 3](static/term_project/data_example_02.html){target="_blank"}
+For the Project Proposal Submission, you must propose a concrete plan for the remainder of the Term Project and find and summarize the data that your group plans to use. Remember that your goal is to develop appropriate regression analyses to answer real-world research questions.
 
 
 ## What to submit
 
-You must download the following <a href="static/term_project/data.Rmd" download>`data.Rmd`</a> template R Markdown file and complete it for your chosen data set.
+You must download the following  <a href="static/term_project/proposal.Rmd" download>`proposal.Rmd`</a> template R Markdown file and complete it.
 
 `r only_group_leader`
 
-1. The completed `data.Rmd` R Markdown file
-1. The corresponding `data.html` HTML report file
+1. The completed `proposal.Rmd` R Markdown file
+1. The corresponding `proposal.html` HTML report file
 1. If your data is not confidential or sensitive in nature, then publish your data as a CSV file on Google Sheets --  you can do this by following the 6 steps in [this Twitter thread](https://t.co/CeM3IIemFU) (or see [this screenshot of the thread](static/images/Uploading_csv.png)). That way your group can all access a single copy of your data on the web. If your data is confidential or sensitive in nature, do not publish it on the web, but rather submit the Excel or CSV file as well.
 
+
+You can get a sense for the requirements of this project phase by reading some example project proposals `r submission_will_differ`:
+
+* [Example project proposal 1](static/term_project/pr_example.html){target="_blank"}
+* [Example project proposal 2](static/term_project/proposal_example_01.html){target="_blank"}
 
 
 
@@ -157,153 +151,119 @@ Here are some possible data sources:
     
     
 
-<!--
-* You may not use the following data:
-    + Any datasets used in this class, either in ModernDive or in any of the examples.
-    + Any data from the data journalism website FiveThirtyEight.com
--->
-
 
 
 ## Hints
 
-* **Where is this heading?**: For the next project phase (project proposal), you will be making a visualization like this [one](static/term_project/proposal_example.html#colored-scatterplot){target="_blank"}. If you can make a visualization like this one, then your data is set for the rest of the project.
-* When you have questions:
-    * Please ask questions that you think the entire class would like to know the answer to in the `project` folder on Piazza; if necessary, you can make the post private. 
-* Only minimal data wrangling using the `dplyr` package is expected at this time; you will be doing more for the "project proposal" phase coming up. That being said, feel free to experiment!
+* Your data may require some wrangling to get it in the appropriate format. Given that this is not a class where data wrangling is a central focus, we suggest you check out the following resources:
 
-
-* Disclaimer: Just because things seem good now doesn't mean your project data is set for semester. Unforeseen problems may crop up during the next phase on data wrangling, at which point you may need to revise your data. This is a reality of data collection in the real world!
-* Do not include any `View()` statements in your `.Rmd` files as this may cause an error.
-* Avoid "data dumps". For example, showing the contents of all 1000 rows in a data frame. This will make your output document really large and unreadable.
-
-
-
-
-***
-
-
-
-# Project Proposal {#proposal}
-
-For the Project Proposal Submission, you must dig a little deeper into your chosen data and propose a more concrete plan for the remainder of the Term Project.
-
-
-**`r hint_2`**
-
-You can get a sense for the requirements of this project phase by reading some example project proposals `r submission_will_differ`:
-
-* [Example project propsal submission 1](static/term_project/proposal_example.html){target="_blank"}
-* [Example project propsal submission 2](static/term_project/proposal_example_01.html){target="_blank"}
-* [Example project propsal submission 3](static/term_project/proposal_example_02.html){target="_blank"}
-
-
-## What to submit
-
-You must download the following  <a href="static/term_project/proposal.Rmd" download>`proposal.Rmd`</a> template R Markdown file and complete it.
-
-`r only_group_leader`
-
-
-1. The completed `proposal.Rmd` R Markdown file
-1. The corresponding `proposal.html` HTML report file
-1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
-
-
-
-
-
-
-## Hints
-
-Your data may require some wrangling to get it in the appropriate format. Given that this is not a class where data wrangling is a central focus, we suggest you check out the following resources:
-
-1. The SMCS help center. 
-1. Be sure to look at the [data wrangling "Tips & Tricks"](https://moderndive.com/C-appendixC.html#data-wrangling){target="_blank"} ModernDive page written by Jenny Smetzer. It's based on the seven most common data wrangling questions they've encountered from students while they were working on their term projects:
+  * the [data wrangling "Tips & Tricks"](https://moderndive.com/C-appendixC.html#data-wrangling){target="_blank"} ModernDive page written by Jenny Smetzer. It's based on the seven most common data wrangling questions they've encountered from students while they were working on their term projects:
 
 ```{r, echo=FALSE, out.width="70%"}
 include_graphics("static/images/data_wrangling.png")
 ```
 
-3. Post your question in Piazza.
-
-* Be sure to incorporate any feedback given to you from the data proposal phase.
-
+  * Post questions in Piazza!    
+    + Please ask questions that you think the entire class would like to know the answer to in the `project` folder on Piazza; if necessary, you can make the post private. 
+  
+* Only minimal data wrangling using the `dplyr` package is expected at this time; you will be doing more for the "project proposal" phase coming up. That being said, feel free to experiment!
+* Disclaimer: Just because things seem good now doesn't mean your project data is set for semester. Unforeseen problems may crop up during the next phase on data wrangling, at which point you may need to revise your data. This is a reality of data collection in the real world!
+* Do not include any `View()` statements in your `.Rmd` files as this may cause an error.
+* Avoid "data dumps". For example, showing the contents of all 1000 rows in a data frame. This will make your output document really large and unreadable.
 
 
 ***
 
 
 
-# Initial Project Submission {#submission}
 
-For the Initial Project Submission, you must complete the following sections of your `project_submission.Rmd` file:
+# Initial submission-video presentation: {#submission}
 
-* Section 1: Introduction
-* Section 2: Exploratory data analysis
-* Section 3 subsections 3.1, 3.2, and 3.3: Multiple linear regression: Methods, Model Results, Interpreting the regression table.
-* Section 5: Author Statement
 
-Do not complete the following sections (you'll be doing this at the final submission phase):
+Research cannot be impactful if it is not shared. 
+Your task for this assignment is to apply all that you have learned so far in this course to develop appropriate regression analyses to answer your real-world research question.
 
-* Section 3 subsections 3.4, 3.5: Inference for multiple regression
-* Section 4: Discussion. You will write this conclusion based on the results of sections 3.4 and 3.5.
+You must decide as a group how to best explain your key findings. Your research findings will be shared in two ways: 
 
-You can get a sense for the requirements of this project phase by reading some example initial project submissions `r submission_will_differ`:
+* a video presentation (this assignment), and
+* a written report (the next assignment). 
 
-* [Example initial project submission 1](static/term_project/submission_example.html){target="_blank"}
-* [Example initial project submission 2](static/term_project/submission_example_01.html){target="_blank"}
-* [Example initial project submission 3](static/term_project/submission_example_02.html){target="_blank"}
+These two submissions will be form the majority of the marks for your Term Project and should demonstrate your learning from throughout the course.
 
+Your video presentation will be watched and commented on by your classmates. 
+In creating your written report (next assignment), you will need to explain what changes you made in response to your own self-reflection and the feedback to your video presentation. 
 
 
 ## What to submit
 
-You must download the following <a href="static/term_project/submission.Rmd" download>`project_submission.Rmd`</a> template R Markdown file and fill it in for your project.
+1. Once your group has created your video presentation (maximum of 7 minutes), you must upload the video to YouTube, Vimeo, Dropbox, or Google Drive and paste a public sharing link as your submission for this assignment.
+Your video file must be an MP4, MPEG, or Ogg video file (in order to be compatible with Perusall). 
+2. In addition, you must submit a statement of the roles and contributions of each individual to this group project:
+  + Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase
+  + If your group were to earn 5 points on this submission, how should those points be shared across your group members?
 
-`r only_group_leader`
+When presenting your work, you must ensure that you clearly present each of the following:
 
-1. The `project_submission.Rmd` R Markdown file with sections 1, 2, 3.1, 3.2, 3.3, and 5 completed
-1. The corresponding `project_submission.html` HTML report file.
-1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
+* Statement of the problem: Describe the questions you address and any key issues surrounding the questions. Present your original research hypotheses (i.e., what you initially thought you would find by looking at these data)
+* Data collection: Explain where the data came from and any implications of the process by which the data were collected.
+* Analyses: Describe the analyses you did. 
+* Results: Present relevant descriptive and inferential statistics. Include tables or graphs that support your findings (be judicious: too many tables and graphs will hurt the clarity of your message). 
+* Conclusions: Answer your questions of interest in context. Appropriately applied and interpreted regression analyses will be the key aspect of the marking of your project.
+* Discussion: What implications do your results have? and for what population?  What could be done to improve the study if it was done again? What types of biases might exist?
 
-* Remember to incorporate any feedback given to you from the proposal phase.
+
+## Hints
+
+* Your group can meet (and present) together in Blackboard Collaborate by clicking the "Group Meeting room" link on our class's Moodle page. If you wish, you could then create a breakout group where you can share your visuals and use screen recording software to record yourselves presenting your material.
+* Other good options for recording your screen and audio include Quicktime (if you are using a mac), Screencast-O-Matic, or Camtasia. 
+* Your group could also meet and record yourselves via Zoom, Skype, Google Meet, etc. You can call in to Zoom and Google Meet with a landline, so these should be an option as well even if you don't have a microphone on your computer. 
 
 
-***
+******
 
+# Peer review of video presentations: {#peerreview} 
+
+You will be assigned several of your classmates' video submissions to (individually) peer review. 
+You will watch the presentations assigned to you and offer comments and constructive feedback to your classmates' video submissions. 
+This will be an important opportunity to view the work being done by other groups in your class and, through your constructive feedback, to apply your growing understanding of the course material to a new research question.
+
+## What to submit
+
+These peer review assignments will be visible on your Moodle page after the presentations have all been submitted. 
+
+The assignment links in Moodle will take you to Perusall.com, where you will be able to view and annotate the assigned videos. 
+You will be graded based on your participation (completely watching the videos) and on the quality of your feedback. 
+
+
+*******
 
 
 # Final Project Submission {#resubmission}
 
-For the Final Project Submission, you must revise and extend your initial submission. This submission will be worth the majority of the marks for your Term Project and should demonstrate your learning from throughout the course.
+The goal of this assignment is to perform create a final written report (maximum of 7 pages) for your group project.
 
-You will use the same `project_submission.Rmd` file you submitted for the project submission phase, and should
+When presenting your work, you must ensure that you clearly present each of the following:
 
-* Incorporate any feedback given to you from the project submission phase.
-* Complete Sections 3.4 and 3.5: Inference for multiple regression
-* Complete Section 4: Discussion. You will write this conclusion based on the results of sections 3.4 and 3.5.
+* Statement of the problem: Describe the questions you address and any key issues surrounding the questions. Present your original research hypotheses (i.e., what you initially thought you would find by looking at these data)
+* Data collection: Explain where the data came from and any implications of the process by which the data were collected.
+* Analyses: Describe the analyses you did. 
+* Results: Present relevant descriptive and inferential statistics. Include tables or graphs that support your findings (be judicious: too many tables and graphs will hurt the clarity of your message). 
+* Conclusions: Answer your questions of interest in context. Appropriately applied and interpreted regression analyses will be the key aspect of the marking of your project.
+* Discussion: What implications do your results have? and for what population?  What could be done to improve the study if it was done again? What types of biases might exist?
 
-
-You can get a sense for the requirements of this project phase by reading some example final project submissions `r submission_will_differ`:
-
-* [Example initial project submission 1](static/term_project/resubmission_example.html){target="_blank"}
-* [Example initial project submission 2](static/term_project/resubmission_example_01.html){target="_blank"}
-* [Example initial project submission 3](static/term_project/resubmission_example_02.html){target="_blank"}
-
-In particular, be sure to read the following new sections:
-
-* Sections 3.4, 3.5: Inference for multiple regression
-* Section 4: Discussion.
 
 
 ## What to submit
 
 `r only_group_leader`
 
-1. The updated `project_submission.Rmd` R Markdown file.
-1. The corresponding `project_submission.html` HTML report file.
+1. An R Markdown file containing your reproducible report file.
+1. The corresponding knitted HTML report file.
 1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
+1. A statement of the roles and contributions of each individual to this group project:
+  + Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase
+  + If your group were to earn 5 points on this submission, how should those points be shared across your group members?
+
 
 
 
