@@ -1,6 +1,6 @@
 
 ---
-title: "STAT 1910 Project Proposal Example"
+title: "STAT 3240 Project Proposal Example"
 author: "Alexis Cohen, Andrianne Dao, Isabel Gomez, Jenny Smetzer, and Albert Y. Kim"
 date: "Last updated on `r Sys.Date()`"
 output:
@@ -26,6 +26,21 @@ library(janitor)
 set.seed(76)
 ```
 
+
+
+# Big-picture
+
+## Research question
+
+_What is your research question?_
+
+Overall, we are hoping to better understand how and if school conditions influence student performance. Our question specifically is whether percentage of economically disadvantaged students and school size predict the average math SAT score in Massachusetts high schools. 
+
+## Description of data
+
+_Please give a very short description of the data set along with it's original source._
+
+We have data from all schools in Massachusetts from 2017. The data set contains SAT scores, and some information about school demographics. While the data was downloaded from Kaggle [here](https://www.kaggle.com/ndalziel/massachusetts-public-schools-data), the original source of the data are Massachusetts Department of Education [reports](http://profiles.doe.mass.edu/state_report/).
 
 # Data
 

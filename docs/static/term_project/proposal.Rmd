@@ -1,6 +1,6 @@
 
 ---
-title: "STAT 1910 Project Proposal"
+title: "STAT 3240 Project Proposal"
 author: "WRITE YOUR GROUP NAME HERE"
 date: "Last updated on `r Sys.Date()`"
 output:
@@ -25,6 +25,18 @@ library(janitor)
 # The choice of seed value of 76 was an arbitrary one on my part.
 set.seed(76)
 ```
+
+# Big-picture
+
+## Research question
+
+_What is your research question?_
+
+
+## Description of data
+
+_Please give a very short description of the data set along with it's original source._
+
 
 
 # Data
@@ -68,7 +80,7 @@ _`select()` the following variables **in this order** and drop all others. Elimi
 1. _Second: The outcome variable $y$_
 1. _Third: The numerical explanatory variable_
 1. _Fourth: The categorical explanatory variable_
-1. _Rest: any other variable you find interesting_
+1. _Rest: any other variables you find interesting_
 
 ```{r}
 
