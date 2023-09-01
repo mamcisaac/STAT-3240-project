@@ -11,9 +11,6 @@ output:
     number_sections: yes
 ---
 
-<style>
-h1{font-weight: 400;}
-</style>
 
 ```{r, include=FALSE}
 knitr::opts_chunk$set(
@@ -176,7 +173,6 @@ include_graphics("static/images/data_wrangling.png")
 
 
 
-
 # Video presentation {#submission}
 
 
@@ -197,6 +193,7 @@ In creating your written report (next assignment), you will need to explain what
 ## What to submit
 
 1. Once your group has created your video presentation (maximum of 7 minutes), you must upload the video to YouTube, Vimeo, Dropbox, or Google Drive and paste a public sharing link as your submission for this assignment.
+
     + Your video file must be an MP4, MPEG, or Ogg video file (in order to be compatible with Perusall, which we will use for the peer review component).
 2. In addition, you must submit a statement of the roles and contributions of each individual to this group project:
     + Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase
@@ -221,7 +218,7 @@ When presenting your work, you must ensure that you clearly present each of the 
 
 ******
 
-# Peer review of video presentations {#peerreview} 
+# Peer review of video presentations: {#peerreview} 
 
 You will be assigned several of your classmates' video submissions to (individually) peer review. 
 You will watch the presentations assigned to you and offer comments and constructive feedback to your classmates' video submissions. 
@@ -236,6 +233,7 @@ You will be graded based on your participation (completely watching the videos) 
 
 
 *******
+
 
 
 # Written report {#resubmission}
@@ -261,8 +259,9 @@ When presenting your work, you must ensure that you clearly present each of the 
 1. The corresponding knitted HTML report file.
 1. Only if your data is confidential or sensitive in nature, submit your Excel or CSV file as well. Otherwise you should publish your data as a CSV file on Google Sheets as described above.
 1. A statement of the roles and contributions of each individual to this group project:
-    + Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase
-    + If your group were to earn 5 points on this submission, how should those points be shared across your group members?
+
+  + Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase
+  + If your group were to earn 5 points on this submission, how should those points be shared across your group members?
 
 
 
