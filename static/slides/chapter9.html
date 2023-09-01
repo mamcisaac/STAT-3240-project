@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Chapter 9: Building the Regression Model I: Model Selection and Validation</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Michael McIsaac" />
+    <script src="chapter9_files/header-attrs/header-attrs.js"></script>
+    <script src="chapter9_files/htmlwidgets/htmlwidgets.js"></script>
+    <link href="chapter9_files/datatables-css/datatables-crosstalk.css" rel="stylesheet" />
+    <script src="chapter9_files/datatables-binding/datatables.js"></script>
+    <script src="chapter9_files/jquery/jquery-3.6.0.min.js"></script>
+    <link href="chapter9_files/dt-core/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="chapter9_files/dt-core/css/jquery.dataTables.extra.css" rel="stylesheet" />
+    <script src="chapter9_files/dt-core/js/jquery.dataTables.min.js"></script>
+    <link href="chapter9_files/crosstalk/css/crosstalk.min.css" rel="stylesheet" />
+    <script src="chapter9_files/crosstalk/js/crosstalk.min.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Chapter 9: Building the Regression Model I: Model Selection and Validation
+]
+.subtitle[
+## STAT 3240
+]
+.author[
+### Michael McIsaac
+]
+.institute[
+### UPEI
+]
+
+---
+
+
+
+
+
+
+
+
+
+
+
+### Learning Objectives for Section 9.1
+
+After Section 9.1, you should be able to 
+
+- Understand the model-building process: data collection, variable selection, model selection, model validation
+
+---
+
+### 9.1: Overview of Model-Building Process
+
+Data Collection:
+
+* **Controlled Experiments**
+
+* **Controlled Experiments with Covariates**
+
+* **Confirmatory Observational Studies**
+
+* **Exploratory Observational Studies**
+
+--
+
+[CONSORT statement on randomization:   www.consort-statement.org/checklists/view/32--consort-2010/87-randomisation-type](www.consort-statement.org/checklists/view/32--consort-2010/87-randomisation-type)
+
+[CONSORT statement on adjusted analyses:   www.consort-statement.org/checklists/view/32--consort-2010/97-additional-analyses](www.consort-statement.org/checklists/view/32--consort-2010/97-additional-analyses)
+
+&lt;!-- Data Wrangling --&gt;
+
+---
+
+&lt;img src="img/Figure9p1.png" width="425px" style="display: block; margin: auto;" /&gt;
+
+&lt;!-- herehere: 
+	Figure 9.1 (highlight "for exploratory observational studies")
+	talk about all of Figure 9.1 (Note that Model Validation will be in 9.6)
+	Focus on "Reduction of Explanatory Variables"/ Model Selection, but don't put any words on slides...
+		+ on slides: Reminder about comments on p 349:
+			Comments
+1. All too often, unwary investigators will screen a set of explanatory variables by fitting the regression model containing the entire set of potential X variables and then simply dropping those for which the t* statistic (7.25):
+has a small absolute value. As we know from Chapter 7, this procedure can lead to the dropping of import~t interco~lated explanatory variables..Clearl~, a good search procedure mUf be. able to handle Important mtercorrelated explanatory vanabIes m such a way that not all of them will be dropped.
+2. ControlledexperimentscanusuallyavoidmanyofPIeproblemsinexploratoryobservational studies. For example, the effects of latent predictor variables are minimized by using randomization. In addition, adequate ranges o f the explanatory variables can be selected and correlations among the explanatory variables can be eliminated by appropriate choices of their levels.
+
+	Give examples from my work and have the class (socrative) classify them into the four types of studies.
+		+ LAN: confirmatory
+		+ gender-based inequalities: exploratory
+		+ DSMB: controlled experiment
+		+ Rob: confirmatory (from DAG) that mimics a controlled experiment.
+	Note that we will focus on Model Selection for Exploratory Observational Studies in the next few Sections. 
+--&gt;
+
+---
+
+#### Residential outdoor light-at-night and breast cancer risk in Canada
+
+Experimental and epidemiologic studies suggest that light-at-night (LAN) exposure disrupt circadian rhythms, which may increase breast cancer risk. We investigated whether residential outdoor LAN is associated with breast cancer risk in Canada. 
+
+A population-based case-control study was conducted in Vancouver, British Columbia and Kingston, Ontario, Canada with incident breast cancer cases and controls frequency matched by age to cases living in the same region. This analysis was restricted to 782 cases and 833 controls who provided lifetime residential histories. Using time-weighted average duration at each home 10-20 years prior to study entry, two measures of cumulative average outdoor LAN were calculated using two satellite data sources. 
+
+Logistic regression was used to estimate the relationship between outdoor LAN and breast cancer risk, considering interactions for menopausal status and night shift work.
+
+---
+
+#### Gender-based inequalities in adolescent mental health in Canada
+
+We aim to generate new knowledge about the processes by which social factors, such as gender and social positions, act in combination to systematically marginalize or privilege boys and girls leading to gender-based inequalities in mental health in Canada. 
+
+Our quantitative strand will use a WHO-affiliated adolescent health survey (the Health Study Approach. Behaviour in School-aged Children (HBSC) study). Analyses will involve descriptive and analytic methods that follow epidemiological traditions. 
+
+---
+
+#### Comparative effectiveness of newer oral diabetes medications in preventing advanced diabetic retinopathy
+
+Diabetic retinopathy (DR), the most common complication of diabetes, is the leading cause of blindness and vision impairment in working-age adults. Pivotal studies have established that pharmacotherapy decreases the risk of developing severe DR and the associated vision loss. However, these studies were conducted before the availability of the many newer diabetes medication classes. Evidence suggests that these newer medications differ in their effects on DR. 
+
+We will conduct a population-based retrospective cohort study to address the objectives. Administrative health care databases will be linked to perform the planned analyses. In our primary analysis we will use propensity score based methods to compare the risk of developing severe DR among patients treated with DPP4Is, SGLT2Is and SUs. 
+
+
+---
+
+#### A Phase II Randomized, Double-Blind, Placebo-Controlled Study of the Efficacy, Safety, and Tolerability of Arbaclofen Administered for the Treatment of Social Function in Children and Adolescents with Autism Spectrum Disorders.
+
+
+
+---
+
+layout: true
+class: inverse
+---
+
+### Warm-up Exercises
+
+
+```r
+clothing_model = lm(clothing_expenditure~income+sex+food_expenditure+recreation_expenditure+ miscellaneous_expenditure+marital_status+type_of_dwelling, data=spending_subset)
+msummary(clothing_model)
+```
+
+```
+##                                  Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)                      6.44e+02   3.18e+02    2.02   0.0435
+## income                           1.75e-02   4.13e-03    4.24  2.6e-05
+## sexmale                         -5.31e+02   1.42e+02   -3.75   0.0002
+## food_expenditure                 1.43e-01   2.61e-02    5.51  5.9e-08
+## recreation_expenditure           2.19e-01   3.37e-02    6.49  2.1e-10
+## miscellaneous_expenditure        1.12e-01   1.39e-01    0.81   0.4180
+## marital_statusnever_married     -2.46e+02   2.11e+02   -1.17   0.2425
+## marital_statusother             -5.10e+02   1.93e+02   -2.65   0.0083
+## type_of_dwellingduplex           3.51e+02   3.41e+02    1.03   0.3028
+## type_of_dwellingother           -3.65e+02   4.43e+02   -0.82   0.4111
+## type_of_dwellingrow_house       -1.01e+03   4.38e+02   -2.31   0.0215
+## type_of_dwellingsemi_detached   -1.33e+02   3.72e+02   -0.36   0.7213
+## type_of_dwellingsingle_detached -2.38e+02   2.42e+02   -0.98   0.3269
+## 
+## Residual standard error: 1470 on 487 degrees of freedom
+## Multiple R-squared:  0.262,	Adjusted R-squared:  0.244 
+## F-statistic: 14.4 on 12 and 487 DF,  p-value: &lt;2e-16
+```
+
+---
+
+
+```r
+anova(clothing_model)
+```
+
+```
+## Analysis of Variance Table
+## 
+## Response: clothing_expenditure
+##                            Df   Sum Sq  Mean Sq F value  Pr(&gt;F)
+## income                      1 7.13e+07 7.13e+07   33.11 1.5e-08
+## sex                         1 1.25e+07 1.25e+07    5.82   0.016
+## food_expenditure            1 1.44e+08 1.44e+08   66.90 2.5e-15
+## recreation_expenditure      1 1.06e+08 1.06e+08   49.35 7.3e-12
+## miscellaneous_expenditure   1 2.93e+06 2.93e+06    1.36   0.244
+## marital_status              2 1.36e+07 6.79e+06    3.16   0.044
+## type_of_dwelling            5 2.17e+07 4.34e+06    2.02   0.075
+## Residuals                 487 1.05e+09 2.15e+06
+```
+
+---
+
+layout: false
+
+### Recap: Section 9.1
+
+After Section 9.1, you should be able to 
+
+- Understand the model-building process: data collection, variable selection, model selection, model validation
+
+---
+
+### Learning Objectives for Sections 9.3-9.5
+
+After Sections 9.3-9.5, you should be able to 
+
+- Apply appropriate criteria to perform data-based variable selection
+-	Understand automatic variable selection methods
+-	Understand the difficulty (or, perhaps, futility) of attempting to automatically identify a "best" set of variables in exploratory model building.
+
+---
+
+
+### 9.3 Criteria for Model Selection
+
+From any set of `\(p - 1\)` predictors, `\(2^{p- 1}\)` alternative sets of included variables can be constructed.
+
+
+**Model selection procedures**, also known as subset selection or variables selection procedures, have been developed to identify a small group of regression models that are "good" according to a specified criterion. A detailed examination can then be made of a limited number of the more promising or "candidate" models, leading to the selection of the final regression model to be employed. This limited number might consist of three to six "good" subsets according to the criteria specified, so the investigator can then carefully study these regression models for choosing the final model.
+
+---
+.small[
+&lt;!-- While many criteria for comparing the regression models have been developed, we will focus on six:  --&gt;
+
+| Criterion | Calculation | Evidence of a good subset of `\(p-1\)` predictors | 
+|-----------|-------------|-----------------------------------------------|
+| `\(R^2_p\)`    | `\(1 - \frac{SSE_p}{SSTO}\)`| Bigger is better (note: `\(max\{R_p^2\}\)` always increses as `\(p\)` increases) |
+| `\(R^2_{a,p}\)`| `\(\begin{array} { } 1 - \left(\frac{n-1}{n-p}\right) \frac{SSE_p}{SSTO} \\ = 1 - \frac{MSE_p}{SSTO/(n-1)} \end{array}\)`| Bigger is better |
+| Mallows' `\(C_p\)` | `\(\frac{SSE_p}{MSE(X_1, \ldots, X_{P-1})} - (n-2p)\)` | Small values; values near `\(p\)` |
+| `\(AIC_p\)` | `\(n \ln SSE_p - n \ln n + 2 p\)` | Small values (equivalent to `\(C_p\)` for linear regression) |
+| `\(SBC_p\)` (or `\(BIC_p)\)`   | `\(n \ln SSE_p - n \ln n + (\ln n) p\)` | Small values (note: `\(\ln n &gt; 2\)` for all `\(n \geq 8\)`)|
+| `\(PRESS_p\)` | `\(\sum_{i=1}^n (Y_i - \hat{Y}_{i(i)})^2\)` | Small values (note: `\(PRESS_p\)` is a leave-one-out estimate of `\(SSE\)`, which means it is less impacted by overfitting.)|
+
+* `\(p-1\)` is the number of predictors included in the model out of the available `\(P-1\)` variables. We will assume that `\(n&gt; &gt; P\)`.
+]
+
+---
+layout: inverse
+
+
+```r
+library(leaps)
+
+spending = with(spending_subset, data.frame(clothing_transformed=I(clothing_expenditure^(1/4)), income=income, sex=sex, food=food_expenditure, rec=recreation_expenditure, misc=miscellaneous_expenditure, trans=transportation_expenditure, care=personal_care_expenditure, alcohol= tobacco_alcohol_expenditure, weeks=weeks_worked, married=as.numeric(I(marital_status=="married"))))
+
+model_selection = summary(regsubsets(clothing_transformed~., data=spending, nvmax=10, nbest=1))
+model_selection_10 = summary(regsubsets(clothing_transformed~., data=spending, nvmax=10, nbest=10))
+```
+
+
+
+
+
+---
+layout: inverse
+
+
+<div class="datatables html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-c236ef8c0040f682bde5" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-c236ef8c0040f682bde5">{"x":{"filter":"none","vertical":false,"data":[["5","7","9","1","8","6","2","3","10","4","14","18","16","17","15","11","12","20","19","13","23","26","24","27","25","30","21","28","22","29","36","34","33","38","32","35","37","39","31","40","49","50","48","43","46","41","45","44","47","42","53","58","56","59","55","51","60","52","57","54","68","69","70","64","61","67","63","65","62","66","80","73","76","71","78","75","72","79","74","77","88","86","87","89","82","83","90","84","81","85","91"],[1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,7,7,7,7,7,8,8,8,8,8,8,8,8,8,8,9,9,9,9,9,9,9,9,9,9,10],[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,1,1,1,0,0,1,0,1,1,0,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1],[0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1,0,0,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1],[0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1],[0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,1,1,0,0,1,0,1,1,1,0,0,0,1,1,1,1,1,1,1,0,1,1,1,1,1],[0,0,0,1,0,0,0,0,0,0,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1],[0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,1,0,0,1,0,0,0,0,1,1,1,0,1,0,0,1,0,0,1,1,1,0,1,1,0,1,0,1,1,1,0,1,1,0,1,1,0,1,1,1,1,1,1,1,1,0,1,1,1],[0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,1,0,1,0,0,0,0,1,1,1,0,1,1,0,1,0,0,1,1,1,1,1,1,1,1,0,1,1],[1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,1,0,1,0,0,1,0,1,0,0,0,0,1,1,1,1,1,0,1,0,1,0,1,1,1,1,0,1,1,0,1,0,1,1,1,1,1,1,1,1,1,0,1],[730.8609,751.0454,757.6546,590.0995,755.4515,747.9058,650.0673,673.3611,767.5764,721.3451,576.7323,584.7696999999999,582.797,584.5084000000001,581.8954,533.3425,554.8579,596.917,590.0716,565.9528,527.451,530.6994,527.956,531.8563,529.5568,547.2531,511.8243,532.4551,519.2666,532.7343,510.3667,508.8484,508.68,511.1124,507.9529,510.2658,510.4021,512.8792,497.9833,516.6549,505.4059,505.4852,504.131,494.8475,497.5922,494.0555,497.4248,496.9216,502.704,494.2917,490.7247,493.6852,493.4523,494.1356,493.4378,487.7909,494.1642,489.9034,493.5942,493.0915,490.2236,490.3815,490.3833,487.6487,482.8551,489.7997,487.4429,489.1434,487.0892,489.1968,489.854,482.7391,487.2871,482.4729,489.0221,486.9422,482.5505,489.0874,486.7144,488.4159,497.3112,489.4871,494.5734,511.7397,482.344,482.4307,539.1215,486.5529,482.1508,488.288,482.0175],[0.0506,0.0244,0.0158,0.2334,0.0186,0.0284,0.1555,0.1253,0.0029,0.0629,0.2508,0.2404,0.2429,0.2407,0.2441,0.3072,0.2792,0.2246,0.2335,0.2648,0.3148,0.3106,0.3142,0.3091,0.3121,0.2891,0.3351,0.3083,0.3255,0.308,0.337,0.339,0.3392,0.336,0.3401,0.3371,0.337,0.3337,0.3531,0.3288,0.3435,0.3434,0.3451,0.3572,0.3536,0.3582,0.3538,0.3545,0.347,0.3579,0.3625,0.3587,0.359,0.3581,0.359,0.3663,0.3581,0.3636,0.3588,0.3595,0.3632,0.363,0.363,0.3665,0.3728,0.3637,0.3668,0.3646,0.3672,0.3645,0.3637,0.3729,0.367,0.3732,0.3647,0.3674,0.3731,0.3647,0.3677,0.3655,0.354,0.3641,0.3575,0.3352,0.3734,0.3733,0.2997,0.3679,0.3737,0.3657,0.3738],[0.0487,0.0224,0.0138,0.2319,0.0167,0.0265,0.1538,0.1235,0.0009,0.0611,0.2478,0.2373,0.2399,0.2376,0.2411,0.3044,0.2763,0.2215,0.2304,0.2618,0.3107,0.3064,0.31,0.3049,0.3079,0.2848,0.3311,0.3041,0.3214,0.3038,0.3317,0.3336,0.3339,0.3307,0.3348,0.3318,0.3316,0.3284,0.3479,0.3234,0.3368,0.3367,0.3385,0.3507,0.3471,0.3517,0.3473,0.3479,0.3404,0.3514,0.3548,0.3509,0.3512,0.3503,0.3512,0.3586,0.3502,0.3558,0.351,0.3517,0.3541,0.3539,0.3539,0.3575,0.3638,0.3547,0.3578,0.3555,0.3582,0.3555,0.3533,0.3627,0.3567,0.363,0.3544,0.3571,0.3629,0.3543,0.3574,0.3552,0.3421,0.3525,0.3457,0.323,0.3619,0.3618,0.2868,0.3563,0.3622,0.354,0.361],[245.4481,265.925,272.63,102.6476,270.3949,262.7399,163.4842,187.1154,282.6955,235.7945,91.0868,99.2407,97.2393,98.9756,96.32470000000001,47.0685,68.8956,111.5639,104.6193,80.1512,43.0916,46.3871,43.6039,47.5607,45.2279,63.1805,27.2385,48.1682,34.7887,48.4514,27.7598,26.2195,26.0487,28.5163,25.3111,27.6575,27.7957,30.3088,15.1971,34.1392,24.7272,24.8076,23.4338,14.0159,16.8003,13.2124,16.6305,16.12,21.9862,13.452,11.8333,14.8367,14.6004,15.2936,14.5857,8.856999999999999,15.3226,11.0001,14.7444,14.2344,13.3249,13.4851,13.487,10.7127,5.8498,12.8949,10.504,12.2291,10.1452,12.2833,14.95,7.732,12.3459,7.462,14.106,11.9961,7.5407,14.1723,11.7649,13.4911,24.5152,16.5778,21.7377,39.1527,9.331200000000001,9.4192,66.9311,13.6011,9.135199999999999,15.3613,11],[-13.5228,0.0987,4.4795,-120.4888,3.0235,-1.9958,-72.0964,-54.4935,10.9847,-20.0755,-125.7306,-118.8107,-120.5003,-119.0341,-121.2744,-164.8378,-145.0637,-108.5306,-114.2978,-135.1644,-164.1771,-161.1072,-163.6987,-160.0184,-162.1849,-145.7494,-179.2144,-159.4558,-171.9964,-159.1937,-174.4258,-175.9155,-176.081,-173.6957,-176.7961,-174.5246,-174.3911,-171.9703,-186.7072,-168.3029,-173.095,-173.0165,-174.3579,-183.651,-180.8855,-184.4519,-181.0537,-181.5597,-175.7751,-184.2129,-181.6196,-178.6122,-178.8482,-178.1563,-178.8629,-184.6179,-178.1274,-182.4572,-178.7044,-179.2139,-175.9159,-175.7549,-175.753,-178.5491,-183.4883,-176.3484,-178.7601,-177.0188,-179.123,-176.9642,-170.0784,-177.3939,-172.7054,-177.6697,-170.9283,-173.0593,-177.5893,-170.8615,-173.2933,-171.5484,-156.3095,-164.2384,-159.0697,-142.0095,-171.5887,-171.4988,-115.947,-167.2447,-171.789,-165.4648,-165.7126]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>p<\/th>\n      <th>income<\/th>\n      <th>sexmale<\/th>\n      <th>food<\/th>\n      <th>rec<\/th>\n      <th>misc<\/th>\n      <th>trans<\/th>\n      <th>care<\/th>\n      <th>alcohol<\/th>\n      <th>weeks<\/th>\n      <th>married<\/th>\n      <th>rss<\/th>\n      <th>rsq<\/th>\n      <th>adjr2<\/th>\n      <th>cp<\/th>\n      <th>bic<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"scrollX":true,"pageLength":100,"scrollY":600,"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+
+---
+
+&lt;img src="chapter9_files/figure-html/unnamed-chunk-6-1.png" width="100%" style="display: block; margin: auto;" /&gt;
+
+&lt;!-- .pull-left[ --&gt;
+
+&lt;!-- ] --&gt;
+
+&lt;!-- .pull-right[ --&gt;
+
+&lt;!-- ] --&gt;
+
+---
+
+
+### 9.4 Automatic Search Procedures for Model Selection
+
+
+As noted in the previous section, the number of possible models, `\(2^{P-1}\)`, grows rapidly with the number of predictors. Evaluating all of the possible alternatives can be a daunting endeavor. To simplify the task, a variety of automatic computer-search procedures have been developed.
+
+
+---
+
+### "Best" Subsets Algorithms
+
+Time-saving algorithms have been developed in which the best subsets according to a specified criterion are identified without requiring the fitting of all of the possible subset regression models.
+
+
+When the pool of potential `\(X\)` variables contains 30 to 40 or even more variables, use of a "best" subsets algorithm may not be feasible. An automatic search procedure that develops the "best" subset of `\(X\)` variables sequentially may then be helpful.
+
+---
+
+### Stepwise Regression Methods
+
+#### Forward stepwise regression:
+
+1. Choose the best single predictor (the `\(X\)` variable with the largest `\(t\)` -value).
+2. Out of the remaining predictors, add the most useful predictor to the existing model (the `\(X\)` variable with the largest `\(t\)` -value, given everything else that is already in the model) if it meets some prespecified threshold
+3. Drop the least useful predictor from the current model if it fails to meet some prespecified threshold
+4. Repeat steps 2 and 3 until no more variables can enter or leave the model. 
+
+--
+
+#### Backward stepwise regression:
+
+Start with the full model (include all variables), then proceed as in Forward stepwise regression, only backward...
+
+--
+
+Note:
+
+* stepwise search procedures end with the identification of a single regression model as "best." 
+* "best" subsets algorithm can identify several "good" regression models for final consideration. 
+
+
+
+---
+
+layout: inverse
+
+
+```r
+summary(regsubsets(clothing_transformed~., method="exhaustive", data=spending, nvmax=10, nbest=1))$outmat
+```
+
+```
+##           income sexmale food rec misc trans care alcohol weeks married
+## 1  ( 1 )  " "    " "     " "  " " " "  " "   "*"  " "     " "   " "    
+## 2  ( 1 )  " "    " "     " "  "*" " "  " "   "*"  " "     " "   " "    
+## 3  ( 1 )  " "    " "     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 4  ( 1 )  "*"    " "     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 5  ( 1 )  "*"    " "     "*"  "*" " "  " "   "*"  "*"     " "   " "    
+## 6  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  " "     " "   "*"    
+## 7  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  "*"     " "   "*"    
+## 8  ( 1 )  "*"    "*"     "*"  "*" " "  "*"   "*"  "*"     " "   "*"    
+## 9  ( 1 )  "*"    "*"     "*"  "*" "*"  "*"   "*"  "*"     " "   "*"    
+## 10  ( 1 ) "*"    "*"     "*"  "*" "*"  "*"   "*"  "*"     "*"   "*"
+```
+
+--
+
+&gt; Since the algorithm returns a best model of each size, the results do not depend on a penalty model for model size: it doesn't make any difference whether you want to use AIC, BIC, CIC, DIC, ...
+
+
+---
+
+layout: inverse
+
+
+```r
+summary(regsubsets(clothing_transformed~., method="forward", data=spending, nvmax=10, nbest=1))$outmat
+```
+
+```
+##           income sexmale food rec misc trans care alcohol weeks married
+## 1  ( 1 )  " "    " "     " "  " " " "  " "   "*"  " "     " "   " "    
+## 2  ( 1 )  " "    " "     " "  "*" " "  " "   "*"  " "     " "   " "    
+## 3  ( 1 )  " "    " "     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 4  ( 1 )  "*"    " "     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 5  ( 1 )  "*"    " "     "*"  "*" " "  " "   "*"  "*"     " "   " "    
+## 6  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  "*"     " "   " "    
+## 7  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  "*"     " "   "*"    
+## 8  ( 1 )  "*"    "*"     "*"  "*" " "  "*"   "*"  "*"     " "   "*"    
+## 9  ( 1 )  "*"    "*"     "*"  "*" "*"  "*"   "*"  "*"     " "   "*"    
+## 10  ( 1 ) "*"    "*"     "*"  "*" "*"  "*"   "*"  "*"     "*"   "*"
+```
+---
+
+layout: inverse
+
+
+```r
+summary(regsubsets(clothing_transformed~., method="backward", data=spending, nvmax=10, nbest=1))$outmat
+```
+
+```
+##           income sexmale food rec misc trans care alcohol weeks married
+## 1  ( 1 )  " "    " "     " "  " " " "  " "   "*"  " "     " "   " "    
+## 2  ( 1 )  " "    " "     " "  "*" " "  " "   "*"  " "     " "   " "    
+## 3  ( 1 )  " "    " "     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 4  ( 1 )  "*"    " "     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 5  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 6  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  " "     " "   "*"    
+## 7  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  "*"     " "   "*"    
+## 8  ( 1 )  "*"    "*"     "*"  "*" " "  "*"   "*"  "*"     " "   "*"    
+## 9  ( 1 )  "*"    "*"     "*"  "*" "*"  "*"   "*"  "*"     " "   "*"    
+## 10  ( 1 ) "*"    "*"     "*"  "*" "*"  "*"   "*"  "*"     "*"   "*"
+```
+
+---
+
+### 9.5: Some Final Comments on Automatic Model Selection Procedures
+
+* no automatic search procedure will always find the "best" model
+	+ indeed, there may exist several "good" regression models whose appropriateness for the purpose at hand needs to be investigated.
+
+* Subject-specific expertise and judgment needs to play an important role in model building for exploratory studies. 
+
+* When a qualitative predictor variable is represented in the pool of potential `\(X\)` variables by a number of indicator variables (e.g., province is represented by several indicator variables), it is often appropriate to keep these indicator variables together as a group to represent the qualitative variable, even if a subset containing only some of the indicator variables is "better" according to the criterion employed. 
+
+* Similarly, if second-order terms `\(X^2\)` or interaction terms need to be present in a regression model, one would ordinarily wish to have the first-order terms in the model as representing the main effects.
+
+---
+
+### Penalized Regression
+
+**Lasso** (least absolute shrinkage and selection operator) is a regression analysis method that performs both variable selection and regularization in order to enhance the prediction accuracy and interpretability of the statistical model it produces.
+
+`$$\beta_{lasso} = argmin[SSE(\beta) + \lambda \cdot ||\beta||_1 ],$$`
+where the `\(L_1\)` -norm `\(||\beta||_1 = \sum_{j=1}^p | \beta_j|\)` measures the *complexity* of the model.
+
+So, instead of only seeking to minize SSE (as the least squares estimator does), the *lasso* penalizes models that are too complex. I.e., the lasso errs toward models with parameters set to zero (so models that exclude lots of not-overly-important predictor variables); this can help avoid overfitting (and can act as a variable selection tool). 
+
+---
+class:inverse
+&lt;img src="chapter9_files/figure-html/unnamed-chunk-12-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+---
+class:inverse
+
+
+```r
+coef(fit.lasso, s=exp(c(-.5, -1, -2, -3, -Inf))) %&gt;% round(5)
+```
+
+```
+## 11 x 5 sparse Matrix of class "dgCMatrix"
+##                s1      s2      s3       s4       s5
+## (Intercept) 6.722 6.29851 5.38710  4.92781  4.60921
+## income      .     .       0.00000  0.00001  0.00001
+## sexmale     .     .       .       -0.10465 -0.26551
+## food        .     0.00000 0.00005  0.00006  0.00006
+## rec         .     0.00003 0.00010  0.00012  0.00013
+## misc        .     .       .        0.00001  0.00005
+## trans       .     .       .        .        0.00000
+## care        .     0.00030 0.00050  0.00054  0.00054
+## alcohol     .     .       .        0.00002  0.00005
+## weeks       .     .       .        .        0.00136
+## married     .     .       .        0.14461  0.27041
+```
+
+```r
+msummary(lm(clothing_transformed~., data=spending))
+```
+
+```
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  4.60e+00   2.10e-01   21.90  &lt; 2e-16
+## income       1.15e-05   2.91e-06    3.94  9.4e-05
+## sexmale     -2.72e-01   9.88e-02   -2.75  0.00613
+## food         6.39e-05   1.79e-05    3.57  0.00039
+## rec          1.28e-04   2.33e-05    5.49  6.4e-08
+## misc         5.44e-05   9.45e-05    0.58  0.56521
+## trans        4.20e-06   6.49e-06    0.65  0.51765
+## care         5.39e-04   7.08e-05    7.61  1.4e-13
+## alcohol      4.63e-05   2.16e-05    2.15  0.03244
+## weeks        1.44e-03   3.91e-03    0.37  0.71330
+## married      2.75e-01   1.09e-01    2.52  0.01198
+## 
+## Residual standard error: 0.993 on 489 degrees of freedom
+## Multiple R-squared:  0.374,	Adjusted R-squared:  0.361 
+## F-statistic: 29.2 on 10 and 489 DF,  p-value: &lt;2e-16
+```
+---
+
+### Recap Sections 9.3-9.5
+
+After Sections 9.3-9.5, you should be able to 
+
+- Apply appropriate criteria to perform data-based variable selection
+-	Understand automatic variable selection methods
+-	Understand the difficulty (or, perhaps, futility) of attempting to automatically identify a "best" set of variables in exploratory model building.
+
+---
+
+
+### Learning Objectives for Section 9.6
+
+After Section 9.6, you should be able to 
+
+- Understand the need for model validation. 
+- Understand how to validate models using replicate studies and data splitting
+- Assess model validity given appropriate output.
+
+---
+
+### 9.6: Model Validation
+
+The final step in the model-building process is the validation of the selected regression models. 
+
+Model validation usually involves checking a candidate model against independent data. 
+
+Three basic ways of validating a regression model are:
+
+1. Collection of new data to check the model and its predictive ability.
+2. Comparison of results with theoretical expectations, earlier empirical results, and
+simulation results.
+3. Use of a holdout sample to check the model and its predictive ability.
+
+--
+
+With recent computational advances, **bootstrapping** has also become an appealing modification to using a holdout sample. 
+
+---
+
+### Collection of New Data to Check Model
+
+One validation method is to re-estimate the model form chosen earlier using the new data. 
+
+The estimated regression coefficients and various characteristics of the fitted model are then compared for consistency to those of the regression model based on the earlier data. 
+
+If the results are consistent, they provide strong support that the chosen regression model is applicable under broader circumstances than those related to the original data.
+
+--
+
+&gt;  I do not understand the difference between the validation step with new data for an exploratory observational study versus conducting a confirmatory observational study instead.
+
+---
+
+A second validation method is designed to calibrate the predictive capability of the selected regression model. 
+
+When a regression model is developed from given data, it is inevitable that the selected model is chosen, at least in large part, because it fits well the data at hand (i.e., due to sampling noise). For a different set of random outcomes, one may likely have arrived at a different model. 
+
+A result of this model development process is that the error mean square `\(MSE\)` will tend to understate the inherent variability in making future predictions from the selected model.
+
+---
+
+A means of measuring the actual predictive capability of the selected regression model is to use this model to predict each case in the new data set and then to calculate the mean of the squared prediction errors, to be denoted by MSPR, which stands for **mean squared prediction error**:
+
+`$$MSPR = \frac{\sum_{{i^\ast}=1}^{n^\ast} (Y_{i^\ast} - \hat Y_{i^\ast})^2}{n^\ast}$$`
+where
+
+* `\(Y_{i^\ast}\)` is the value of the response valiable in the `\({i^\ast}\)`th validation case
+* `\(\hat Y_{i^\ast}\)` is the predicted value for the `\({i^\ast}\)`th validation case based on the model-building dataset
+* `\(n^\ast\)` is the number of cases in the validation data set
+
+--
+
+Recall that
+`$$MSE = \frac{\sum_{i=1}^{n} (Y_i - \hat Y_i)^2}{n-p}$$`
+
+* MSE is measured on the data set used to develop the prediction model
+* MSPR measures how well the model works for predictions in a *different* data set
+
+
+
+&lt;!-- If MSPR is fairly close to MSE, then the MSE for the selected regression model is not seriously biased and gives an appropriate indication of the predictive ability of the model.  --&gt;
+
+&lt;!-- If MSPR is much larger than MSE, one should rely on the MSPR as an indicator of how well the selected regression model will predict in the future. --&gt;
+
+---
+
+### Comparison with Theory, Empirical Evidence, or Simulation Results
+
+Comparisons of regression coefficients and predictions with theoretical expectations, previous empirical results, or simulation results should be made. 
+
+Unfortunately, there is often little theory that can be used to validate regression models.
+
+---
+
+### Data Splitting
+
+
+By far the preferred method to validate a regression model is through the collection of new data. Often, however, this is neither practical nor feasible. 
+
+An alternative when the data set is large enough is to split the data into two sets. 
+
+The first set, called the model-building set or the **training sample**, is used to develop the model. 
+
+The second data set, called the **validation** or prediction set, is used to evaluate the reasonableness and predictive ability of the selected model. Data splitting in effect is an attempt to simulate replication of the study.
+
+---
+
+There are difficult decisions to be made when splitting the data: 
+
+* How big should the training sample be? Alternately, how big should the validation sample be? 
+* Should we split the data completely randomly, or should we try to somehow balance the distribution of predictors across the two samples?
+* Should we even have a validation set or should be use all of our data in developing the best model possible? 
+
+--
+
+Using a single validation sample is usually insufficient; we still have sample noise in the validation sample.
+
+In addition, splitting the data causes us to perform variable selection on a smaller data set, which increases the problems associated with overfitting (choosing variables based on sample noise, rather than any true underlying trends). 
+
+---
+
+Often, the validation process will be extended to *K-fold cross-validation*:
+
+* the data are split into *K* parts
+* the first *K-1* parts are treated as the training sample, with the *K*th part being the validation sample
+* this process is repeated with each of the *K* parts being treated as the validation sample once
+
+This gives us a sense of how *optmistic* MSE tends to be for that particular model (i.e., the average difference between MSE and MSPR). We don't want to base *model selection* on overly-optimistic MSEs.
+
+--
+
+This idea can be (and probably *should be*) taken further using *bootstrapping* (sampling with replacement from within our sample). 
+
+--
+
+In the end, we might want to fit an overall model (using all of the data), and report MSE along with some measure of how optimistic it may be.
+
+---
+
+Split the data into training and test samples
+
+```r
+library(tidyverse)
+library(caret)
+
+set.seed(123)
+training.samples &lt;- spending$clothing_transformed %&gt;% createDataPartition(p = 0.8, list=FALSE)
+
+train.data  &lt;- spending[training.samples, ]
+test.data &lt;- spending[-training.samples, ]
+```
+
+Build the model using the training data
+
+```r
+model &lt;- lm(clothing_transformed ~ income+sex+food+rec+care+married, data = train.data)
+msummary(model)
+```
+
+```
+##              Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)  4.70e+00   1.78e-01   26.48  &lt; 2e-16
+## income       1.17e-05   2.99e-06    3.91  0.00011
+## sexmale     -2.59e-01   1.09e-01   -2.39  0.01749
+## food         7.27e-05   1.93e-05    3.76  0.00020
+## rec          1.47e-04   2.61e-05    5.61  3.7e-08
+## care         5.15e-04   7.89e-05    6.53  2.0e-10
+## married      3.15e-01   1.19e-01    2.65  0.00839
+## 
+## Residual standard error: 0.989 on 394 degrees of freedom
+## Multiple R-squared:  0.374,	Adjusted R-squared:  0.365 
+## F-statistic: 39.3 on 6 and 394 DF,  p-value: &lt;2e-16
+```
+
+---
+
+Make predictions and compute the `\(R^2\)` and MSPR on the TRAINING data
+
+```r
+predictions &lt;- model %&gt;% predict(train.data)
+data.frame( 
+	SSE   = anova(model)["Residuals", "Sum Sq"],
+	PRESS = PRESS(model),
+	MSE   = anova(model)["Residuals", "Mean Sq"],
+	MSPR = RMSE(predictions, train.data$clothing_transformed)^2,
+	R2 = R2(predictions, train.data$clothing_transformed))
+```
+
+```
+##     SSE PRESS    MSE   MSPR     R2
+## 1 385.7 400.7 0.9789 0.9618 0.3742
+```
+
+Make predictions and compute the `\(R^2\)` and MSPR on the TEST data
+
+```r
+predictions &lt;- model %&gt;% predict(test.data)
+data.frame( 
+	MSPR = RMSE(predictions, test.data$clothing_transformed)^2,
+	R2 = R2(predictions, test.data$clothing_transformed))
+```
+
+```
+##    MSPR     R2
+## 1 1.045 0.3439
+```
+
+
+---
+
+Now consider the building of a very complex model (one that is more likely to be prone to overfitting)
+
+```r
+model &lt;- lm(clothing_transformed ~ .^2, data = train.data)
+msummary(model)
+```
+
+```
+##                  Estimate Std. Error t value Pr(&gt;|t|)
+## (Intercept)      2.98e+00   6.78e-01    4.39  1.5e-05
+## income           4.97e-05   1.87e-05    2.65   0.0083
+## sexmale         -5.03e-01   5.37e-01   -0.94   0.3493
+## food             1.71e-04   9.76e-05    1.75   0.0811
+## rec              4.51e-05   1.70e-04    0.27   0.7911
+## misc             7.70e-04   5.46e-04    1.41   0.1589
+## trans            1.13e-05   4.41e-05    0.26   0.7979
+## care             7.46e-04   4.83e-04    1.54   0.1236
+## alcohol         -1.12e-04   1.39e-04   -0.81   0.4206
+## weeks            3.37e-02   1.50e-02    2.25   0.0250
+## married         -3.56e-02   5.90e-01   -0.06   0.9519
+## income:sexmale  -1.24e-05   8.32e-06   -1.49   0.1379
+## income:food      5.36e-10   1.61e-09    0.33   0.7394
+## income:rec       2.82e-09   2.02e-09    1.40   0.1636
+## income:misc     -4.68e-09   7.14e-09   -0.66   0.5128
+## income:trans     3.10e-10   6.95e-10    0.45   0.6556
+## income:care     -9.43e-09   5.99e-09   -1.57   0.1162
+## income:alcohol   1.10e-09   1.71e-09    0.64   0.5216
+## income:weeks    -6.89e-07   3.18e-07   -2.17   0.0308
+## income:married  -5.95e-06   9.07e-06   -0.66   0.5123
+## sexmale:food     5.38e-05   4.42e-05    1.22   0.2241
+## sexmale:rec      4.18e-05   6.14e-05    0.68   0.4967
+## sexmale:misc    -1.62e-04   2.97e-04   -0.55   0.5848
+## sexmale:trans   -1.23e-05   1.82e-05   -0.68   0.4990
+## sexmale:care     2.87e-04   1.92e-04    1.50   0.1356
+## sexmale:alcohol  7.27e-05   6.16e-05    1.18   0.2382
+## sexmale:weeks   -5.61e-03   1.01e-02   -0.56   0.5780
+## sexmale:married  3.81e-01   3.05e-01    1.25   0.2122
+## food:rec         1.62e-08   1.16e-08    1.40   0.1625
+## food:misc        1.43e-08   4.79e-08    0.30   0.7662
+## food:trans       1.97e-09   3.89e-09    0.51   0.6132
+## food:care       -5.21e-08   3.28e-08   -1.59   0.1137
+## food:alcohol    -1.42e-08   8.96e-09   -1.58   0.1140
+## food:weeks      -2.77e-06   1.78e-06   -1.56   0.1205
+## food:married     1.56e-06   4.94e-05    0.03   0.9748
+## rec:misc         1.94e-08   6.15e-08    0.32   0.7524
+## rec:trans       -1.20e-08   3.74e-09   -3.21   0.0015
+## rec:care         1.52e-08   4.39e-08    0.35   0.7288
+## rec:alcohol     -1.36e-08   1.41e-08   -0.97   0.3333
+## rec:weeks       -2.22e-06   2.52e-06   -0.88   0.3782
+## rec:married      5.14e-05   7.76e-05    0.66   0.5084
+## misc:trans      -2.77e-08   2.30e-08   -1.20   0.2299
+## misc:care       -1.56e-07   2.04e-07   -0.76   0.4448
+## misc:alcohol     1.15e-08   4.69e-08    0.24   0.8069
+## misc:weeks      -7.65e-06   1.18e-05   -0.65   0.5177
+## misc:married     2.48e-04   2.76e-04    0.90   0.3695
+## trans:care       3.15e-08   1.70e-08    1.85   0.0654
+## trans:alcohol    1.85e-09   4.17e-09    0.44   0.6573
+## trans:weeks     -2.68e-07   6.62e-07   -0.40   0.6860
+## trans:married   -1.21e-05   2.33e-05   -0.52   0.6042
+## care:alcohol     5.58e-08   3.80e-08    1.47   0.1433
+## care:weeks       6.99e-06   7.99e-06    0.87   0.3826
+## care:married    -3.67e-04   2.21e-04   -1.66   0.0985
+## alcohol:weeks    3.55e-06   2.30e-06    1.55   0.1225
+## alcohol:married -7.01e-05   6.19e-05   -1.13   0.2578
+## weeks:married    1.62e-02   1.10e-02    1.47   0.1422
+## 
+## Residual standard error: 0.965 on 345 degrees of freedom
+## Multiple R-squared:  0.479,	Adjusted R-squared:  0.396 
+## F-statistic: 5.77 on 55 and 345 DF,  p-value: &lt;2e-16
+```
+
+---
+
+Make predictions and compute the `\(R^2\)` and MSPR on the TRAINING data
+
+```r
+predictions &lt;- model %&gt;% predict(train.data)
+data.frame( 
+	SSE   = anova(model)["Residuals", "Sum Sq"],
+	PRESS = PRESS(model),
+	MSE   = anova(model)["Residuals", "Mean Sq"],
+	MSPR = RMSE(predictions, train.data$clothing_transformed)^2,
+	R2 = R2(predictions, train.data$clothing_transformed))
+```
+
+```
+##   SSE PRESS    MSE   MSPR     R2
+## 1 321 467.3 0.9303 0.8004 0.4792
+```
+
+Make predictions and compute the `\(R^2\)` and MSPR on the TEST data
+
+```r
+predictions &lt;- model %&gt;% predict(test.data)
+data.frame( 
+	MSPR = RMSE(predictions, test.data$clothing_transformed)^2,
+	R2 = R2(predictions, test.data$clothing_transformed))
+```
+
+```
+##    MSPR     R2
+## 1 1.422 0.1904
+```
+
+* **Which model is preferable? The complex model or the simpler model?**
+
+&lt;!-- Note that the difference between "RMSE" (root mean square prediction error) and "Residual standard error" (root mean square error) when they are both applied to the training data is just a change in denominator (sqrt(mean((pred - obs)^2 vs sqrt(1/(n-p) * sum((fitted - obs)^2) ) --&gt;
+&lt;!-- e.g., sqrt(0.983^2*345/401) --&gt;
+
+---
+
+layout: true
+class: inverse
+---
+
+### Warm-up Exercises
+
+
+```r
+library(leaps)
+
+spending = with(spending_subset, data.frame(clothing=clothing_expenditure, income=income, sex=sex, food=food_expenditure, rec=recreation_expenditure, misc=miscellaneous_expenditure, trans=transportation_expenditure, care=personal_care_expenditure, alcohol= tobacco_alcohol_expenditure, weeks=weeks_worked, married= as.numeric(I(marital_status=="married"))))
+
+model_selection = summary(regsubsets(clothing~., data=spending, nvmax=10, nbest=1))
+```
+
+---
+
+.pull-left[
+
+```r
+plot(model_selection$rsq, type='l', xlab="p", ylab="R^2")
+```
+
+&lt;img src="chapter9_files/figure-html/unnamed-chunk-22-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+```r
+plot(model_selection$cp, type='l', xlab="p", ylab="Cp")
+```
+
+&lt;img src="chapter9_files/figure-html/unnamed-chunk-22-2.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+
+.pull-right[
+
+```r
+plot(model_selection$adjr2, type='l', xlab="p", ylab="Adjusted R^2")
+```
+
+&lt;img src="chapter9_files/figure-html/unnamed-chunk-23-1.png" width="504" style="display: block; margin: auto;" /&gt;
+
+```r
+plot(model_selection$bic, type='l', xlab="p", ylab="BIC")
+```
+
+&lt;img src="chapter9_files/figure-html/unnamed-chunk-23-2.png" width="504" style="display: block; margin: auto;" /&gt;
+]
+---
+
+
+
+```r
+model_selection$outmat
+```
+
+```
+##           income sexmale food rec misc trans care alcohol weeks married
+## 1  ( 1 )  " "    " "     " "  " " " "  " "   "*"  " "     " "   " "    
+## 2  ( 1 )  " "    " "     " "  "*" " "  " "   "*"  " "     " "   " "    
+## 3  ( 1 )  " "    " "     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 4  ( 1 )  "*"    " "     "*"  "*" " "  " "   "*"  " "     " "   " "    
+## 5  ( 1 )  "*"    " "     "*"  "*" " "  " "   "*"  "*"     " "   " "    
+## 6  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  "*"     " "   " "    
+## 7  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  "*"     " "   "*"    
+## 8  ( 1 )  "*"    "*"     "*"  "*" " "  " "   "*"  "*"     "*"   "*"    
+## 9  ( 1 )  "*"    "*"     "*"  "*" "*"  " "   "*"  "*"     "*"   "*"    
+## 10  ( 1 ) "*"    "*"     "*"  "*" "*"  "*"   "*"  "*"     "*"   "*"
+```
+
+---
+layout: false
+
+
+
+
+### Recap Section 9.6
+
+After Section 9.6, you should be able to 
+
+- Understand the need for model validation. 
+- Understand how to validate models using replicate studies and data splitting
+- Assess model validity given appropriate output.
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"slideNumberFormat": "%current%",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"navigation": {
+"scroll": false
+}
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

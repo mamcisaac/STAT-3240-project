@@ -197,10 +197,10 @@ In creating your written report (next assignment), you will need to explain what
 ## What to submit
 
 1. Once your group has created your video presentation (maximum of 7 minutes), you must upload the video to YouTube, Vimeo, Dropbox, or Google Drive and paste a public sharing link as your submission for this assignment.
-Your video file must be an MP4, MPEG, or Ogg video file (in order to be compatible with Perusall). 
+    + Your video file must be an MP4, MPEG, or Ogg video file (in order to be compatible with Perusall, which we will use for the peer review component).
 2. In addition, you must submit a statement of the roles and contributions of each individual to this group project:
-  + Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase
-  + If your group were to earn 5 points on this submission, how should those points be shared across your group members?
+    + Describe the role (Facilitator, Recorder, Reporter, Time Keeper, Checker) and level of contribution of each group member during this project phase
+    + If your group were to earn 5 points on this submission, how should those points be shared across your group members?
 
 When presenting your work, you must ensure that you clearly present each of the following:
 
