@@ -117,9 +117,10 @@ Your data must contain
 
 1. (If available) An [identification variable](https://moderndive.com/1-getting-started.html#identification-vs-measurement-variables){target="_blank"} that uniquely identifies each observation in each row. 
 1. A numerical outcome variable $y$. Note: binary outcomes variables with 0/1 values are not technically numerical.
-1. Two explanatory variables:
+1. At least three explanatory variables:
     + A numerical explanatory variable $x_1$. Note: this can be some notion of time.
     + A categorical explanatory variable $x_2$ that has between 3-5 levels. Note: If your data has more than 5 levels, they can be collapsed into 5 using data wrangling later.
+    + Other variables of interest ($x_3, \ldots, x_{p-1}$).
 1. At least 50 observations/rows.
 
 ### Possible sources {-}
