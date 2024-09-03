@@ -48,7 +48,7 @@ In order to break down the task and minimize end-of-semester stress, you'll be w
 1. [**Project proposal:**](#proposal) Propose a data set for your project and perform an exploratory data analysis. This is the phase of the project that is the least straightforward. Thus, we recommend you start early and get help during office hours and via Piazza early and often. After you submit your proposal, you will get instructor feedback that you should incorporate in your project proposal. 
 1. [**Initial submission-video presentation:**](#submission) Make an initial submission of your project (using the material we have covered up to this point in class) in the form of a video presentation created by your group. After you submit your work, you will get peer and instructor feedback that you should incorporate in your research poster.
 1. [**Peer review of video presentations:**](#peerreview) You will, individually, offer feedback to your classmates' video submissions. 
-1. [**Final submission-poster presentation:**](#resubmission) Incorporate your feedback from the initial project submission phase, complete the remaining sections, and resubmit your project. The majority of your grade will come from this final project submission.
+1. [**Final submission-poster presentation:**](#resubmission) Incorporate your feedback from the initial project submission phase and create a final research poster. The majority of your grade will come from this final project submission.
 
 During each Project Phase, each student should take on a specific role within the group:
 
