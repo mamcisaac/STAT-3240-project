@@ -1,4 +1,4 @@
-name: STAT 1910 labs
+name: STAT 3240 project
 output_dir: docs
 # The website theme was chosen from
 # https://rmarkdown.rstudio.com/html_document_format#appearance_and_style
@@ -14,8 +14,8 @@ output:
     self_contained: no
 # All icons were obtained from https://fontawesome.com/icons?d=gallery
 navbar:
-  title: STAT 1910
+  title: STAT 3240
   left:
   - text: Term Project
-    href: term_project.html
+    href: index.html
  
