@@ -102,7 +102,7 @@ You must download the following  <a href="static/term_project/proposal.Rmd" down
 
 You can get a sense for the requirements of this project phase by reading some example project proposals `r submission_will_differ`:
 
-* [Example project proposal 1](static/term_project/pr_example.html){target="_blank"}
+* [Example project proposal 1](static/term_project/proposal_example.html){target="_blank"}
 * [Example project proposal 2](static/term_project/proposal_example_01.html){target="_blank"}
 
 
